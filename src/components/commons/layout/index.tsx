@@ -1,3 +1,5 @@
+import LayoutBest from "./best/LayoutBest";
+import LayoutCarousel from "./carousel/LayoutCarousel";
 import LayoutFooter from "./footer/LayoutFooter";
 import LayoutHeader from "./header/LayoutHeader";
 import LayoutNavigation from "./navigation/LayoutNavigation";
@@ -11,6 +13,7 @@ export default function Layout(props: ILayoutProps) {
     <>
       <LayoutHeader />
       <LayoutNavigation />
+      <LayoutBest />
       <div>{props.children}</div>
       <LayoutFooter />
     </>

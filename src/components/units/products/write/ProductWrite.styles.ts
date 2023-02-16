@@ -5,6 +5,7 @@ export const Container = styled.div`
   width: 100%;
   height: 1750px;
   padding: 104px 90px 104px 90px;
+  margin: 0 auto;
 `;
 
 export const Wrapper = styled.div``;
