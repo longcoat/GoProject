@@ -39,40 +39,53 @@ export default function LayoutBest() {
 
   return (
     <>
-      <S.Container>
-        <S.BestWrapper>
-          <S.Title>BEST</S.Title>
-          <S.ItemContainer>
-            {/* 아이템하나 */}
-            {data?.fetchUseditems.slice(0, 4).map((el) => (
-              <S.ItemWrapper onClick={onClickImage} id={el._id} key={el._id}>
-                <S.ItemImgWrapper>
-                  {el.images[0] !== "" ? (
-                    <S.ItemImg
-                      id={el._id}
-                      src={`https://storage.googleapis.com/${el.images[0]}`}
-                    />
-                  ) : (
-                    <S.ItemImg src="/noImg.jpeg" />
-                  )}
-                </S.ItemImgWrapper>
-                <S.ContentsWrapper>
-                  <S.PriceSaleWrapper>
-                    <S.Sale>90%</S.Sale>
-                    <S.Price>{el.price}</S.Price>
-                  </S.PriceSaleWrapper>
-                  <S.Contents>
-                    <S.Company>{el.name}</S.Company>
-                    <S.Product>{el.remarks}</S.Product>
-                  </S.Contents>
-                </S.ContentsWrapper>
-              </S.ItemWrapper>
-            ))}
+      <S.Best>
+        <S.Container>
+          <S.BestWrapper>
+            <S.Title>BEST</S.Title>
+            <S.ItemContainer>
+              {/* 아이템하나 */}
+              {data?.fetchUseditems.slice(0, 4).map((el) => (
+                <S.ItemWrapper onClick={onClickImage} id={el._id} key={el._id}>
+                  <S.ItemImgWrapper>
+                    {el.images[0] !== "" ? (
+                      <S.ItemImg
+                        id={el._id}
+                        src={`https://storage.googleapis.com/${el.images[0]}`}
+                      />
+                    ) : (
+                      <S.ItemImg src="/noImg.jpeg" />
+                    )}
+                  </S.ItemImgWrapper>
+                  <S.ContentsWrapper>
+                    <S.PriceSaleWrapper>
+                      <S.Sale>90%</S.Sale>
+                      <S.Price>{el.price}</S.Price>
+                    </S.PriceSaleWrapper>
+                    <S.Contents>
+                      <S.Company>{el.name}</S.Company>
+                      <S.Product>{el.remarks}</S.Product>
+                    </S.Contents>
+                  </S.ContentsWrapper>
+                </S.ItemWrapper>
+              ))}
 
-            {/* 아이템하나 */}
-          </S.ItemContainer>
-        </S.BestWrapper>
-      </S.Container>
+              {/* 아이템하나 */}
+            </S.ItemContainer>
+          </S.BestWrapper>
+        </S.Container>
+        <S.SearchWrapper>
+          <S.ButtonWrapper>
+            <S.SubmitButton>상품 등록</S.SubmitButton>
+          </S.ButtonWrapper>
+          <S.Search>
+            <S.SearchInput />
+            <S.GlassWrapper>
+              <S.GlassImg src="/readingglasses.png" />
+            </S.GlassWrapper>
+          </S.Search>
+        </S.SearchWrapper>
+      </S.Best>
     </>
   );
 }

@@ -6,6 +6,7 @@ export const Footer = styled.div`
   width: 100%;
   background-color: #f1f1f1;
   padding: 50px 0px 0px 110px;
+  border-top: 1px solid #000000;
 `;
 export const LogoImg = styled.img``;
 

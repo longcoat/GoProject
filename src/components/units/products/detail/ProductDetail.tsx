@@ -33,16 +33,22 @@ export const FETCH_USED_ITEM = gql`
 `;
 
 export default function ProductDetail() {
+  const router = useRouter();
+
+  console.log("========");
+  console.log(router);
+  console.log("========");
+
   const { data } = useQuery<
     Pick<IQuery, "fetchUseditem">,
     IQueryFetchUseditemArgs
   >(FETCH_USED_ITEM, {
     variables: {
-      useditemId: "63ede45bf786be002931a8fb",
+      useditemId: String(router.query.Id),
     },
   });
 
-  console.log("2727272727");
+  console.log("==============");
   console.log(data);
   console.log("==============");
 
@@ -52,18 +58,18 @@ export default function ProductDetail() {
         <S.Header>
           <S.ImgWrapper>
             <S.Img
-              src={`https://storage.googleapis.com/${data?.fetchUseditem[0]?.images}`}
+              src={`https://storage.googleapis.com/${data?.fetchUseditem?.images[0]}`}
             />
           </S.ImgWrapper>
           <S.ProductWrapper>
             <S.ProductInfo>
               <S.SubTitle>AVANDRESS</S.SubTitle>
-              <S.Title>[SET] HERO TRACK WIDE SET-UP PURPLE</S.Title>
+              <S.Title>{data?.fetchUseditem.name}</S.Title>
             </S.ProductInfo>
             <S.PricePickWrapper>
               <S.PriceWrapper>
                 <S.Label>판매가</S.Label>
-                <S.Price>1,533,900</S.Price>
+                <S.Price>{data?.fetchUseditem.price}</S.Price>
                 <S.Won>원</S.Won>
               </S.PriceWrapper>
               <S.PickWrapper>
@@ -74,18 +80,9 @@ export default function ProductDetail() {
             </S.PricePickWrapper>
             <S.Line1></S.Line1>
             <S.ProductContent>
-              <S.Content>
-                폴리에스테르 100% 원사로 스퀘어미터 450 밀도있게 편직하여
-                중량감과 두께를 트레이닝복에 최적화시켰으며 덤블텐타가공으로
-                축율 및 뒤틀림을 최소화 하였습니다. 수분을 빠르게 흡수하고
-                건조되도록 하였고 내마모성이 좋습니다. 기계세탁이 가능하며 세탁
-                후 빠르게 건조되어 관리가 용이합니다. 편직 가공에서 유연제
-                처리로 부드러운 터치감으로 편안합니다.
-              </S.Content>
+              <S.Content>{data?.fetchUseditem.contents}</S.Content>
               <S.TagWrapper>
-                <S.Tag>#트랙자켓</S.Tag>
-                <S.Tag>#아우터</S.Tag>
-                <S.Tag>#자켓</S.Tag>
+                <S.Tag>{data?.fetchUseditem.tags}</S.Tag>
               </S.TagWrapper>
             </S.ProductContent>
             <S.Line2></S.Line2>

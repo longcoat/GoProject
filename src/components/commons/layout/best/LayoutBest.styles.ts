@@ -1,15 +1,21 @@
 import styled from "@emotion/styled";
 
+export const Best = styled.div`
+  background-color: #f1f1f1;
+  padding: 20px;
+`;
+
 export const Container = styled.div`
   max-width: 1920px;
   width: 100%;
   height: 600px;
   margin: 0 auto;
+  background-color: #ffffff;
 `;
 
 export const BestWrapper = styled.div`
   width: 100%;
-  height: 500px;
+  height: 600px;
 `;
 
 export const Title = styled.div`
@@ -40,18 +46,18 @@ export const ItemContainer = styled.div`
 
 export const ItemWrapper = styled.div`
   width: 300px;
-  height: 350px;
+  height: 450px;
   cursor: pointer;
 `;
 
 export const ItemImgWrapper = styled.div`
   width: 300px;
-  height: 270px;
+  height: 370px;
 `;
 
 export const ItemImg = styled.img`
   width: 300px;
-  height: 270px;
+  height: 370px;
   object-fit: cover;
 `;
 
@@ -124,4 +130,76 @@ export const Product = styled.div`
   text-transform: capitalize;
 
   color: #555555;
+`;
+
+export const SearchWrapper = styled.div`
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #f1f1f1;
+  padding: 20px 42px;
+`;
+
+export const ButtonWrapper = styled.div``;
+
+export const SubmitButton = styled.button`
+  width: 170px;
+  height: 60px;
+  left: 97px;
+  top: 1034px;
+
+  background: #ffffff;
+  border: 1px solid #000000;
+
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  /* or 20px */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.05em;
+
+  color: #000000;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+export const Search = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 30%;
+  padding: 20px 0;
+  position: relative;
+`;
+
+export const SearchInput = styled.input`
+  height: 30px;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #000000;
+  background-color: #f1f1f1;
+
+  :focus {
+    outline: none;
+  }
+`;
+
+export const GlassWrapper = styled.div`
+  margin-top: 5px;
+
+  cursor: pointer;
+`;
+
+export const GlassImg = styled.img`
+  width: 17px;
+  height: 17px;
+  position: absolute;
+  right: 5px;
+  bottom: 18px;
 `;

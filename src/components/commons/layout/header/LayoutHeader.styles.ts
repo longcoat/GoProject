@@ -10,8 +10,12 @@ export const Header = styled.div`
   align-items: center;
 `;
 
-export const LogoImg = styled.img`
+export const LogoWrapper = styled.div`
   padding: 25px 0px 25px 75px;
+`;
+
+export const LogoImg = styled.img`
+  cursor: pointer;
 `;
 
 export const ButtonWrapper = styled.div`
