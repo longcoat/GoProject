@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import {
   type IQuery,
   type IQueryFetchUseditemsArgs,
@@ -35,6 +35,10 @@ export default function LayoutBest() {
     console.log(e.currentTarget.id);
     console.log("=====");
     void router.push(`/${e.currentTarget.id}`);
+  };
+
+  const onClickSubmit = () => {
+    void router.push("/new");
   };
 
   return (
@@ -76,7 +80,7 @@ export default function LayoutBest() {
         </S.Container>
         <S.SearchWrapper>
           <S.ButtonWrapper>
-            <S.SubmitButton>상품 등록</S.SubmitButton>
+            <S.SubmitButton onClick={onClickSubmit}>상품 등록</S.SubmitButton>
           </S.ButtonWrapper>
           <S.Search>
             <S.SearchInput />

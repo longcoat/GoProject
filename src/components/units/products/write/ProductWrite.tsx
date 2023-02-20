@@ -1,6 +1,14 @@
 import * as S from "./ProductWrite.styles";
+// const ReactQuill = dynamic(async () => await import("react-quill"), {
+//   ssr: false,
+// });
 
-export default function ProductWrite() {
+interface IProductWriteProps {
+  isEdit?: boolean;
+  data?: any;
+}
+
+export default function ProductWrite(props: IProductWriteProps) {
   return (
     <>
       <S.Container>
@@ -53,10 +61,6 @@ export default function ProductWrite() {
           <S.ImgWrapper>
             <S.Label>사진 첨부</S.Label>
             <S.ImgUploadWrapper>
-              <S.ImgContainer>
-                <S.X>X</S.X>
-                <S.Img src="/phoneimg.png" />
-              </S.ImgContainer>
               <S.UploadWrapper>
                 <S.ImgUpload>
                   <S.plus>+</S.plus>

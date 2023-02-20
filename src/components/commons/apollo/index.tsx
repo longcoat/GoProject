@@ -2,18 +2,12 @@ import {
   ApolloClient,
   ApolloLink,
   ApolloProvider,
-  fromPromise,
   InMemoryCache,
 } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
-import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { useEffect } from "react";
-import { onError } from "@apollo/client/link/error";
-import { getAccessToken } from "../../../commons/libraries/getAccessToken";
-import {
-  accessTokenState,
-  restoreAccessTokenLoadable,
-} from "../../../commons/stores";
+import { useRecoilState } from "recoil";
+import { accessTokenState } from "../../../commons/stores";
 
 interface IApolloSettingProps {
   children: JSX.Element;
@@ -22,44 +16,19 @@ interface IApolloSettingProps {
 const GLOBAL_STATE = new InMemoryCache();
 export default function ApolloSetting(props: IApolloSettingProps) {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
-  const aaa = useRecoilValueLoadable(restoreAccessTokenLoadable);
-
-  useEffect(() => {
-    void aaa.toPromise().then((newAccessToken) => {
-      setAccessToken(newAccessToken);
-    });
-  }, []);
-
-  const errorLink = onError(({ graphQLErrors, operation, forward }) => {
-    if (typeof graphQLErrors !== "undefined") {
-      for (const err of graphQLErrors) {
-        if (err.extensions.code === "UNAUTHENTICATED") {
-          return fromPromise(
-            getAccessToken().then((newAccessToken) => {
-              setAccessToken(newAccessToken);
-
-              if (typeof newAccessToken !== "string") return;
-              operation.setContext({
-                headers: {
-                  ...operation.getContext().headers,
-                  Authorization: `Bearer ${newAccessToken}`,
-                },
-              });
-            })
-          ).flatMap(() => forward(operation));
-        }
-      }
-    }
-  });
 
   const uploadLink = createUploadLink({
     uri: "https://backend10.codebootcamp.co.kr/graphql",
     headers: { Authorization: `Bearer ${accessToken}` },
-    credentials: "include", // 중요한 정보를 포함할거다!
   });
 
+  useEffect(() => {
+    const result = localStorage.getItem("accessToken") ?? "";
+    setAccessToken(result);
+  }, []);
+
   const client = new ApolloClient({
-    link: ApolloLink.from([errorLink, uploadLink]),
+    link: ApolloLink.from([uploadLink]),
     cache: GLOBAL_STATE,
   });
 

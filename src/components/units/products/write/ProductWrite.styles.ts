@@ -72,7 +72,6 @@ export const Input = styled.input`
 
   display: flex;
   align-items: center;
-  text-transform: capitalize;
 
   color: #a9a9a9;
   border: 0;

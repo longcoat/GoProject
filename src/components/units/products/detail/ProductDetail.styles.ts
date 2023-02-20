@@ -151,6 +151,7 @@ export const Line4 = styled.div`
 
 export const ProductContent = styled.div`
   padding: 30px 10px 10px 10px;
+  height: 143px;
 `;
 
 export const Content = styled.div`
