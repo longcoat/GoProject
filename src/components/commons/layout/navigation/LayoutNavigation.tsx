@@ -9,14 +9,30 @@ export default function LayoutNavigation() {
   return (
     <>
       <S.Navigation>
-        <S.Text>BRAND</S.Text>
-        <S.Text>CATEGORY</S.Text>
-        <S.Text>LIFE</S.Text>
-        <S.Text>BEAUTY</S.Text>
-        <S.Text>|</S.Text>
-        <S.Text>#STYLE</S.Text>
-        <S.Text>EVENT</S.Text>
-        <S.Text>BEST</S.Text>
+        <Link href={"/"}>
+          <S.Text>BRAND</S.Text>
+        </Link>
+        <Link href={"/"}>
+          <S.Text>CATEGORY</S.Text>
+        </Link>
+        <Link href={"/"}>
+          <S.Text>LIFE</S.Text>
+        </Link>
+        <Link href={"/"}>
+          <S.Text>BEAUTY</S.Text>
+        </Link>
+        <Link href={"/"}>
+          <S.Text>|</S.Text>
+        </Link>
+        <Link href={"/"}>
+          <S.Text>#STYLE</S.Text>
+        </Link>
+        <Link href={"/"}>
+          <S.Text>EVENT</S.Text>
+        </Link>
+        <Link href={"/"}>
+          <S.Text>BEST</S.Text>
+        </Link>
         <>
           {nowPage === "/login" ? (
             <S.LoginPage>

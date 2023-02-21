@@ -1,9 +1,7 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import {
   IMutation,
   IMutationToggleUseditemPickArgs,
-  IQuery,
-  IQueryFetchUseditemsIPickedArgs,
 } from "../../../../commons/types/generated/types";
 import { FETCH_USED_ITEM } from "../queries/useFetchUseditem";
 

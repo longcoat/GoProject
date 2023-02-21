@@ -3,12 +3,21 @@ import { useFetchUserLoggedIn } from "../../hooks/queries/useFetchUserLoggedIn";
 import * as S from "./LayoutHeader.styles";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import CreaditModal from "../../../units/payment/Creadit.index";
+import { userInfoState } from "../../../../commons/stores";
+import { useRecoilState } from "recoil";
 
 export default function LayoutHeader() {
   const router = useRouter();
   const { data } = useFetchUserLoggedIn();
   const { logoutUser } = useLogoutUser();
   console.log(data?.fetchUserLoggedIn);
+  const [isOpen, setIsOpen] = useState(false);
+  const [userInfo] = useRecoilState(userInfoState);
+  const handlePayment = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   const onClickMain = () => {
     void router.push("/");
@@ -37,7 +46,7 @@ export default function LayoutHeader() {
           <>
             {data?.fetchUserLoggedIn.name ? (
               <>
-                <S.ChargePoint>충전</S.ChargePoint>
+                <S.ChargePoint onClick={handlePayment}>충전</S.ChargePoint>
               </>
             ) : (
               <></>
@@ -63,23 +72,12 @@ export default function LayoutHeader() {
           </S.CountWrapper>
         </S.ButtonWrapper>
       </S.Header>
+      <CreaditModal
+        isOpen={isOpen}
+        infoUser={userInfo}
+        setIsOpen={setIsOpen}
+        handleCradit={handlePayment}
+      />
     </>
   );
 }
-
-// <>
-// <S.Header>
-//   <S.LogoWrapper>
-//     <S.LogoImg src="/DINGCOlogo.png" />
-//   </S.LogoWrapper>
-//   <S.ButtonWrapper>
-//     <S.Text>로그인</S.Text>
-//     <S.Text>회원가입</S.Text>
-//     <S.Text>장바구니</S.Text>
-//     <S.CountWrapper>
-//       <S.CountImg src="/redcircle.png" />
-//       <S.CountNumber>0</S.CountNumber>
-//     </S.CountWrapper>
-//   </S.ButtonWrapper>
-// </S.Header>
-// </>

@@ -1,3 +1,4 @@
+import { Modal } from "antd";
 import { useForm } from "react-hook-form";
 import { useCreateUseditemQuestion } from "../../../commons/hooks/mutations/useCreateUseditemQuestion";
 import * as S from "./Comment.styles";
@@ -8,6 +9,9 @@ export default function CommentWrite(props: ICommentWriteProps) {
   const { createUseditemQuestionSubmit } = useCreateUseditemQuestion();
   const onClickCommentSubmit = (data: ICommentProps) => {
     console.log(data, "----commentdata");
+    Modal.success({
+      content: "댓글을 등록하였습니다.",
+    });
     void createUseditemQuestionSubmit(data, props.useditemId);
     setValue("contents", "");
   };

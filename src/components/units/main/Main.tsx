@@ -84,7 +84,11 @@ export default function Main() {
                   <S.ContentsWrapper>
                     <S.PriceSaleWrapper>
                       <S.Sale>90%</S.Sale>
-                      <S.Price>{el.price}</S.Price>
+                      <S.Price>
+                        {el.price
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      </S.Price>
                     </S.PriceSaleWrapper>
                     <S.Contents>
                       <S.Company>{el.name}</S.Company>
@@ -124,7 +128,11 @@ export default function Main() {
                     <S.ContentsWrapper>
                       <S.PriceSaleWrapper>
                         <S.Sale>90%</S.Sale>
-                        <S.Price>{el.price}</S.Price>
+                        <S.Price>
+                          {el.price
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </S.Price>
                       </S.PriceSaleWrapper>
                       <S.Contents>
                         <S.Company>{el.name}</S.Company>

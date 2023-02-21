@@ -4,6 +4,7 @@ import { useAuth } from "../../../commons/hooks/auth/useAuth";
 import { useCreatePointTransactionOfBuyingAndSelling } from "../../../commons/hooks/mutations/useCreatePointTransactionOfBuyingAndSelling";
 import { useFetchUseditem } from "../../../commons/hooks/queries/useFetchUseditem";
 import Link from "next/link";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import * as S from "./ProductDetail.styles";
 import { useRecoilState } from "recoil";
@@ -11,6 +12,9 @@ import { useDeleteUseditem } from "../../../commons/hooks/mutations/useDeleteUse
 import { useFetchUserLoggedIn } from "../../../commons/hooks/queries/useFetchUserLoggedIn";
 import CommentWrite from "../../comments/write/Comment";
 import CommentDetail from "../../comments/detail/CommentDetail";
+import { useToggleUseditemPick } from "../../../commons/hooks/mutations/useToggleUseditemPick";
+import { useEffect, useState } from "react";
+import { Modal } from "antd";
 
 export default function ProductDetail() {
   useAuth();
@@ -18,10 +22,12 @@ export default function ProductDetail() {
   const { data } = useFetchUseditem();
   const userId = useFetchUserLoggedIn();
   console.log(userId, "userId-----");
+  const { onClickTogglePick } = useToggleUseditemPick();
   const { onClickDeleteItem } = useDeleteUseditem();
   const sanitizeHtml = require("sanitize-html");
   const { createPointTransactionOfBuyingAndSellingSubmit } =
     useCreatePointTransactionOfBuyingAndSelling();
+  const [likeLists, setLikeLists] = useState([]);
 
   const onClickBuy = (useditemId: any) => () => {
     void createPointTransactionOfBuyingAndSellingSubmit(useditemId);
@@ -40,6 +46,10 @@ export default function ProductDetail() {
     userId.data?.fetchUserLoggedIn._id,
     data?.fetchUseditem.seller?._id
   );
+  useEffect(() => {
+    const likeItems = JSON.parse(localStorage.getItem("likeLists") ?? "[]");
+    setLikeLists(likeItems);
+  }, [data?.fetchUseditem?.pickedCount]);
 
   return (
     <>
@@ -78,12 +88,38 @@ export default function ProductDetail() {
             <S.PricePickWrapper>
               <S.PriceWrapper>
                 <S.Label>판매가</S.Label>
-                <S.Price>{data?.fetchUseditem.price}</S.Price>
+                <S.Price>
+                  {data?.fetchUseditem.price
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </S.Price>
                 <S.Won>원</S.Won>
               </S.PriceWrapper>
-              <S.PickWrapper>
+              <S.PickWrapper
+                onClick={onClickTogglePick(data?.fetchUseditem?._id)}
+              >
                 <S.My>MY</S.My>
-                <S.HeartImg src="/grayheart.png" />
+                {likeLists.includes(data?.fetchUseditem._id) ? (
+                  <>
+                    <FavoriteIcon
+                      onClick={onClickTogglePick}
+                      style={{
+                        width: "18px",
+                        height: "18px",
+                        marginLeft: "7px",
+                        color: "red",
+                      }}
+                    />
+                  </>
+                ) : (
+                  // && Modal.success({ content: "찜하기 성공!" })
+                  <>
+                    <S.HeartImg
+                      onClick={onClickTogglePick}
+                      src="/grayheart.png"
+                    />
+                  </>
+                )}
                 <S.Product>Product</S.Product>
               </S.PickWrapper>
             </S.PricePickWrapper>
@@ -98,7 +134,9 @@ export default function ProductDetail() {
             </S.ProductContent>
             <S.Line2></S.Line2>
             <S.ButtonWrapper>
-              <S.BuyButton onClick={onClickBuy}>BUY NOW</S.BuyButton>
+              <S.BuyButton onClick={onClickBuy(data?.fetchUseditem?._id)}>
+                BUY NOW
+              </S.BuyButton>
               <S.Basket>SHOPPING BAG</S.Basket>
             </S.ButtonWrapper>
           </S.ProductWrapper>
@@ -160,116 +198,6 @@ export default function ProductDetail() {
         <S.Footer>
           <CommentWrite useditemId={data?.fetchUseditem?._id} />
           <CommentDetail useditemId={data?.fetchUseditem?._id} />
-          {/* <S.QuestionWrapper>
-            <S.QuestionInput placeholder="내용을 입력해 주세요." />
-          </S.QuestionWrapper>
-          <S.WriteButtonWrapper>
-            <S.WriteButton>작성하기</S.WriteButton>
-          </S.WriteButtonWrapper> */}
-          {/* 본인이 본인 댓글 볼 때  댓글뷰 */}
-          {/* <S.Line4></S.Line4> */}
-          {/* <S.ReplyWrapper> */}
-          {/* <S.ReplyContainer> */}
-          {/* <S.Reply1>
-                <S.NameWrapper>
-                  <S.Name>노은정</S.Name>
-                </S.NameWrapper>
-                <S.Reply>
-                  <S.ReplyTitleWrapper>
-                    <S.ReplyTitle>주현님 소개팅 착장 질문이요</S.ReplyTitle>
-                  </S.ReplyTitleWrapper>
-                  <S.ItemWrapper>
-                    <S.Date>2203.03.30</S.Date>
-                    <S.ModifyWrapper>
-                      <S.Modify src="/pencil.png" />
-                    </S.ModifyWrapper>
-                    <S.DeleteWrapper>
-                      <S.Delete src="/delete.png" />
-                    </S.DeleteWrapper>
-                  </S.ItemWrapper>
-                </S.Reply>
-              </S.Reply1> */}
-          {/* <S.AnswerWrapper>
-                <S.Answer>답변</S.Answer>
-                <S.Date1>2023.03.31</S.Date1>
-                <S.AnswerContents>
-                  <div>
-                    안녕하세요, 고객님! 저희 제품에 관심 가져주셔서
-                    감사드립니다.
-                  </div>
-                  <div>현재 더 큰 사이즈 상품은 없습니다. </div>
-                  <div>궁금하신 사항은 언제든지 문의 부탁드립니다.</div>
-                  <div>감사합니다.</div>
-                </S.AnswerContents>
-              </S.AnswerWrapper> */}
-          {/* </S.ReplyContainer> */}
-          {/* </S.ReplyWrapper> */}
-          {/* 남들이 본인 볼 때 댓글뷰 */}
-          {/* <S.ReplyWrapper>
-            <S.NameWrapper>
-              <S.Name>노은정</S.Name>
-            </S.NameWrapper>
-            <S.ReplyContainer>
-              <S.Reply>
-                <S.ReplyTitleWrapper>
-                  <S.ReplyTitle>주현님 소개팅 룩 ...</S.ReplyTitle>
-                </S.ReplyTitleWrapper>
-                <S.ItemWrapper>
-                  <S.Date>2203.03.30</S.Date>
-                  <S.ModifyWrapper>
-                    <S.Modify src="/pencil.png" />
-                  </S.ModifyWrapper>
-                  <S.DeleteWrapper>
-                    <S.Delete src="/delete.png" />
-                  </S.DeleteWrapper> */}
-          {/* <S.AnswerImgWrapper>
-                    <S.AnswerImg src="answer.png" />
-                  </S.AnswerImgWrapper> */}
-          {/* </S.ItemWrapper>
-              </S.Reply> */}
-          {/* <S.AnswerWrapper>
-                <S.Answer>답변</S.Answer>
-                <S.Date1>2023.03.31</S.Date1>
-                <S.AnswerContents>
-                  <div>
-                    안녕하세요, 고객님! 저희 제품에 관심 가져주셔서
-                    감사드립니다.
-                  </div>
-                  <div>현재 더 큰 사이즈 상품은 없습니다. </div>
-                  <div>궁금하신 사항은 언제든지 문의 부탁드립니다.</div>
-                  <div>감사합니다.</div>
-                </S.AnswerContents>
-              </S.AnswerWrapper> */}
-          {/* </S.ReplyContainer>
-          </S.ReplyWrapper> */}
-          {/* 댓글에 답글을 남길 때 */}
-          {/* <S.ReplyWrapper>
-            <S.NameWrapper>
-              <S.Name>노은정</S.Name>
-            </S.NameWrapper>
-            <S.ReplyContainer>
-              <S.Reply>
-                <S.ReplyTitleWrapper>
-                  <S.ReplyTitle>아이고 진짜 박광민 잘 좀하자</S.ReplyTitle>
-                </S.ReplyTitleWrapper>
-                <S.ItemWrapper>
-                  <S.Date>2203.03.30</S.Date>
-                  <S.AnswerImgWrapper>
-                    <S.AnswerImg src="answer.png" />
-                  </S.AnswerImgWrapper>
-                </S.ItemWrapper>
-              </S.Reply>
-              <S.AnswerWrapper>
-                <S.AnswerContents>
-                  <S.QuestionInput1 placeholder="내용을 입력해 주세요." />
-                </S.AnswerContents>
-                <S.WriteButtonWrapper1>
-                  <S.WriteButton1>취소하기</S.WriteButton1>
-                  <S.WriteButton2>작성하기</S.WriteButton2>
-                </S.WriteButtonWrapper1>
-              </S.AnswerWrapper>
-            </S.ReplyContainer>
-          </S.ReplyWrapper> */}
         </S.Footer>
       </S.Container>
     </>

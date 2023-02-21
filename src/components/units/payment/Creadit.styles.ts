@@ -11,6 +11,12 @@ export const CraditModal = styled(Modal)`
   .ant-modal-content {
     border-radius: 20px;
   }
+  :where(.css-dev-only-do-not-override-j0nf2s).ant-modal .ant-modal-footer {
+    text-align: end;
+    background: transparent;
+    /* margin-top: 12px; */
+    margin: 12px 14px 0px 14px;
+  }
 `;
 export const CreaditWrap = styled.div`
   padding: 52px 16px 16px;

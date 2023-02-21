@@ -124,4 +124,5 @@ export const ChargePoint = styled.div`
   padding-top: 2px;
   text-decoration: underline;
   margin-left: 30px;
+  cursor: pointer;
 `;

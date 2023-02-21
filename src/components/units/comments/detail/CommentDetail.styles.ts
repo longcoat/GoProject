@@ -53,6 +53,8 @@ export const Date = styled.div`
 
 export const ModifyWrapper = styled.button`
   margin-left: 20px;
+  background: none;
+  border: none;
 `;
 
 export const Modify = styled.img`
@@ -62,6 +64,8 @@ export const Modify = styled.img`
 
 export const DeleteWrapper = styled.button`
   margin-left: 10px;
+  background: none;
+  border: none;
 `;
 
 export const Delete = styled.img`
