@@ -5,7 +5,7 @@ export const accessTokenState = atom({
   default: "",
 });
 
-// export const userPointState = atom({
-//   key: "userPointState",
-//   default: 0,
-// });
+export const userInfoState = atom({
+  key: "userInfoState",
+  default: {},
+});

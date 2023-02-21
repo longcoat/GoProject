@@ -14,7 +14,6 @@ export const Header = styled.div`
 
 export const Body = styled.div`
   padding: 60px 180px 0px 180px;
-  border-bottom: 1px solid #c0c0c0;
 `;
 
 export const Footer = styled.div`
@@ -38,6 +37,12 @@ export const ProductWrapper = styled.div`
 
 export const ProductInfo = styled.div`
   margin-top: 20px;
+`;
+
+export const InfoHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 export const PricePickWrapper = styled.div`
@@ -113,7 +118,24 @@ export const Product = styled.div`
 `;
 
 export const SubTitle = styled.div`
-  font-size: 10px;
+  font-size: 18px;
+`;
+
+export const EditDeleteWrapper = styled.div``;
+
+export const EditDelete = styled.div``;
+
+export const EditImg = styled.img`
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+`;
+
+export const DeleteImg = styled.img`
+  width: 18px;
+  height: 18px;
+  margin-left: 10px;
+  cursor: pointer;
 `;
 
 export const Title = styled.div`
@@ -141,8 +163,8 @@ export const Line2 = styled.div`
 `;
 
 export const Line3 = styled.div`
-  padding: 0px 60px;
   border: 1px solid #555555;
+  margin: 0px 60px;
 `;
 
 export const Line4 = styled.div`
@@ -415,6 +437,15 @@ export const ReplyWrapper = styled.div`
 export const NameWrapper = styled.div`
   margin-left: 20px;
   width: 90px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const Reply1 = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 5px;
 `;
 
 export const Name = styled.div`
@@ -440,6 +471,7 @@ export const Name = styled.div`
 
 export const ReplyContainer = styled.div`
   width: calc(100% - 150px);
+  margin-top: 3px;
 `;
 
 export const Reply = styled.div`
@@ -447,9 +479,9 @@ export const Reply = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
   width: 100%;
   margin-right: 20px;
-  margin-bottom: 15px;
 `;
 
 export const ReplyTitleWrapper = styled.div`

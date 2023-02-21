@@ -3,10 +3,9 @@ import { useRouter } from "next/router";
 import {
   IQuery,
   IQueryFetchUseditemArgs,
-} from "../../../src/commons/types/generated/types";
-import ProductWrite from "../../../src/components/units/products/write/ProductWrite";
+} from "../../../../commons/types/generated/types";
 
-const FETCH_USED_ITEM = gql`
+export const FETCH_USED_ITEM = gql`
   query fetchUseditem($useditemId: ID!) {
     fetchUseditem(useditemId: $useditemId) {
       _id
@@ -35,9 +34,9 @@ const FETCH_USED_ITEM = gql`
   }
 `;
 
-export default function EditPage() {
+export const useFetchUseditem = () => {
   const router = useRouter();
-  const { data } = useQuery<
+  const query = useQuery<
     Pick<IQuery, "fetchUseditem">,
     IQueryFetchUseditemArgs
   >(FETCH_USED_ITEM, {
@@ -45,13 +44,6 @@ export default function EditPage() {
       useditemId: String(router.query.Id),
     },
   });
-  return (
-    <>
-      <ProductWrite
-        isEdit={true}
-        data={data}
-        useditemId={String(router.query.Id)}
-      />
-    </>
-  );
-}
+
+  return query;
+};

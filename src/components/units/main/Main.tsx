@@ -25,6 +25,7 @@ export const FETCH_USED_ITEMS = gql`
 export default function Main() {
   const router = useRouter();
   const [accessToken] = useRecoilState(accessTokenState);
+  console.log(accessToken);
 
   console.log(accessToken, "token------");
 
@@ -65,41 +66,78 @@ export default function Main() {
     <>
       <S.Line></S.Line>
       <S.Main>
-        {/* {accessToken === undefined ? <></> : <></>} */}
+        {accessToken === "" || undefined ? (
+          <>
+            <S.Container>
+              {data?.fetchUseditems.slice(0, 8).map((el) => (
+                <S.ItemWrapper onClick={onClickImage} id={el._id} key={el._id}>
+                  <S.ItemImgWrapper>
+                    {el.images[0] !== "" ? (
+                      <S.ItemImg
+                        id={el._id}
+                        src={`https://storage.googleapis.com/${el.images[0]}`}
+                      />
+                    ) : (
+                      <S.ItemImg src="/noImg.jpeg" />
+                    )}
+                  </S.ItemImgWrapper>
+                  <S.ContentsWrapper>
+                    <S.PriceSaleWrapper>
+                      <S.Sale>90%</S.Sale>
+                      <S.Price>{el.price}</S.Price>
+                    </S.PriceSaleWrapper>
+                    <S.Contents>
+                      <S.Company>{el.name}</S.Company>
+                      <S.Product>{el.remarks}</S.Product>
+                    </S.Contents>
+                  </S.ContentsWrapper>
+                </S.ItemWrapper>
+              ))}
+            </S.Container>
+          </>
+        ) : (
+          <>
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={onLoadMore}
+              hasMore={true}
+              useWindow={false}
+            >
+              <S.Container>
+                {data?.fetchUseditems.map((el) => (
+                  <S.ItemWrapper
+                    onClick={onClickImage}
+                    id={el._id}
+                    key={el._id}
+                  >
+                    <S.ItemImgWrapper>
+                      {el.images[0] !== "" ? (
+                        <S.ItemImg
+                          id={el._id}
+                          src={`https://storage.googleapis.com/${el.images[0]}`}
+                        />
+                      ) : (
+                        <S.ItemImg src="/noImg.jpeg" />
+                      )}
+                      <S.PickImg src="/grayheart.png" />
+                    </S.ItemImgWrapper>
+                    <S.ContentsWrapper>
+                      <S.PriceSaleWrapper>
+                        <S.Sale>90%</S.Sale>
+                        <S.Price>{el.price}</S.Price>
+                      </S.PriceSaleWrapper>
+                      <S.Contents>
+                        <S.Company>{el.name}</S.Company>
+                        <S.Product>{el.remarks}</S.Product>
+                      </S.Contents>
+                    </S.ContentsWrapper>
+                  </S.ItemWrapper>
+                ))}
+              </S.Container>
+            </InfiniteScroll>
+          </>
+        )}
         {/* 메인 로그인유무로 분리 */}
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={onLoadMore}
-          hasMore={true}
-          useWindow={false}
-        >
-          <S.Container>
-            {data?.fetchUseditems.map((el) => (
-              <S.ItemWrapper onClick={onClickImage} id={el._id} key={el._id}>
-                <S.ItemImgWrapper>
-                  {el.images[0] !== "" ? (
-                    <S.ItemImg
-                      id={el._id}
-                      src={`https://storage.googleapis.com/${el.images[0]}`}
-                    />
-                  ) : (
-                    <S.ItemImg src="/noImg.jpeg" />
-                  )}
-                </S.ItemImgWrapper>
-                <S.ContentsWrapper>
-                  <S.PriceSaleWrapper>
-                    <S.Sale>90%</S.Sale>
-                    <S.Price>{el.price}</S.Price>
-                  </S.PriceSaleWrapper>
-                  <S.Contents>
-                    <S.Company>{el.name}</S.Company>
-                    <S.Product>{el.remarks}</S.Product>
-                  </S.Contents>
-                </S.ContentsWrapper>
-              </S.ItemWrapper>
-            ))}
-          </S.Container>
-        </InfiniteScroll>
       </S.Main>
     </>
   );

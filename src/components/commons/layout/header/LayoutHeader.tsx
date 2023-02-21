@@ -2,16 +2,21 @@ import { useLogoutUser } from "../../hooks/mutations/useLogoutUser";
 import { useFetchUserLoggedIn } from "../../hooks/queries/useFetchUserLoggedIn";
 import * as S from "./LayoutHeader.styles";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function LayoutHeader() {
+  const router = useRouter();
   const { data } = useFetchUserLoggedIn();
   const { logoutUser } = useLogoutUser();
   console.log(data?.fetchUserLoggedIn);
 
+  const onClickMain = () => {
+    void router.push("/");
+  };
   return (
     <>
       <S.Header>
-        <S.LogoWrapper>
+        <S.LogoWrapper onClick={onClickMain}>
           <S.LogoImg src="/DINGCOlogo.png" />
         </S.LogoWrapper>
         <S.ButtonWrapper>

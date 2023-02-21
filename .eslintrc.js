@@ -18,5 +18,7 @@ module.exports = {
     "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/triple-slash-reference": "off",
     "react-hooks/rules-of-hooks": "error",
+    "@typescript-eslint/consistent-type-imports": "off",
+    "@typescript-eslint/await-thenable": "off",
   },
 };

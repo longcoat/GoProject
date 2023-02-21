@@ -28,6 +28,7 @@ export const ItemWrapper = styled.div`
 export const ItemImgWrapper = styled.div`
   width: 300px;
   height: 370px;
+  position: relative;
 `;
 
 export const ItemImg = styled.img`
@@ -109,4 +110,10 @@ export const Product = styled.div`
 export const Line = styled.div`
   margin: 0 50px;
   border-top: 1px solid #555555;
+`;
+
+export const PickImg = styled.img`
+  position: absolute;
+  top: 20px;
+  right: 16px;
 `;

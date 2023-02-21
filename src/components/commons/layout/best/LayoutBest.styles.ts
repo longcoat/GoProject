@@ -53,6 +53,7 @@ export const ItemWrapper = styled.div`
 export const ItemImgWrapper = styled.div`
   width: 300px;
   height: 370px;
+  position: relative;
 `;
 
 export const ItemImg = styled.img`
@@ -201,4 +202,10 @@ export const GlassImg = styled.img`
   position: absolute;
   right: 5px;
   bottom: 18px;
+`;
+
+export const PickImg = styled.img`
+  position: absolute;
+  top: 26px;
+  right: 20px;
 `;

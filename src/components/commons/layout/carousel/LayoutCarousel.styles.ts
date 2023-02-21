@@ -24,3 +24,14 @@ export const NewArrival = styled.div`
   font-size: 22px;
   line-height: 100%;
 `;
+
+export const BoxWrapper = styled.div`
+  width: 1920px;
+  height: 700px;
+`;
+
+export const Box1 = styled.img`
+  width: 1920px;
+  height: 700px;
+  object-fit: cover;
+`;

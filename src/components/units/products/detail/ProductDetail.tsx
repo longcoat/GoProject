@@ -1,56 +1,45 @@
-import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import {
-  type IQuery,
-  type IQueryFetchUseditemArgs,
-} from "../../../../commons/types/generated/types";
+import { userInfoState } from "../../../../commons/stores";
+import { useAuth } from "../../../commons/hooks/auth/useAuth";
+import { useCreatePointTransactionOfBuyingAndSelling } from "../../../commons/hooks/mutations/useCreatePointTransactionOfBuyingAndSelling";
+import { useFetchUseditem } from "../../../commons/hooks/queries/useFetchUseditem";
+import Link from "next/link";
 
 import * as S from "./ProductDetail.styles";
-
-export const FETCH_USED_ITEM = gql`
-  query fetchUseditem($useditemId: ID!) {
-    fetchUseditem(useditemId: $useditemId) {
-      _id
-      name
-      remarks
-      contents
-      price
-      images
-      tags
-      useditemAddress {
-        zipcode
-        address
-        addressDetail
-      }
-      pickedCount
-      seller {
-        _id
-        email
-        name
-      }
-    }
-  }
-`;
+import { useRecoilState } from "recoil";
+import { useDeleteUseditem } from "../../../commons/hooks/mutations/useDeleteUseditem";
+import { useFetchUserLoggedIn } from "../../../commons/hooks/queries/useFetchUserLoggedIn";
+import CommentWrite from "../../comments/write/Comment";
+import CommentDetail from "../../comments/detail/CommentDetail";
 
 export default function ProductDetail() {
+  useAuth();
   const router = useRouter();
+  const { data } = useFetchUseditem();
+  const userId = useFetchUserLoggedIn();
+  console.log(userId, "userId-----");
+  const { onClickDeleteItem } = useDeleteUseditem();
+  const sanitizeHtml = require("sanitize-html");
+  const { createPointTransactionOfBuyingAndSellingSubmit } =
+    useCreatePointTransactionOfBuyingAndSelling();
 
-  console.log("========");
-  console.log(router);
-  console.log("========");
+  const onClickBuy = (useditemId: any) => () => {
+    void createPointTransactionOfBuyingAndSellingSubmit(useditemId);
+  };
 
-  const { data } = useQuery<
-    Pick<IQuery, "fetchUseditem">,
-    IQueryFetchUseditemArgs
-  >(FETCH_USED_ITEM, {
-    variables: {
-      useditemId: String(router.query.Id),
-    },
+  const dirty = data?.fetchUseditem?.contents.replace(
+    /(?:\r\n|\r|\n|p)/g,
+    "br"
+  );
+  const sanitizedDescription = sanitizeHtml(dirty, {
+    allowedTags: false,
+    allowedAttributes: false,
   });
 
-  console.log("==============");
-  console.log(data);
-  console.log("==============");
+  console.log(
+    userId.data?.fetchUserLoggedIn._id,
+    data?.fetchUseditem.seller?._id
+  );
 
   return (
     <>
@@ -63,7 +52,27 @@ export default function ProductDetail() {
           </S.ImgWrapper>
           <S.ProductWrapper>
             <S.ProductInfo>
-              <S.SubTitle>AVANDRESS</S.SubTitle>
+              <S.InfoHeader>
+                <S.SubTitle>{data?.fetchUseditem.seller?.name}</S.SubTitle>
+                <S.EditDeleteWrapper>
+                  {userId?.data?.fetchUserLoggedIn?._id ===
+                    data?.fetchUseditem.seller?._id && (
+                    <>
+                      <S.EditDelete>
+                        <Link href={`/${data?.fetchUseditem?._id}/edit`}>
+                          <S.EditImg src="/pencil.png" />
+                        </Link>
+                        <S.DeleteImg
+                          onClick={onClickDeleteItem(
+                            String(data?.fetchUseditem._id)
+                          )}
+                          src="/delete.png"
+                        />
+                      </S.EditDelete>
+                    </>
+                  )}
+                </S.EditDeleteWrapper>
+              </S.InfoHeader>
               <S.Title>{data?.fetchUseditem.name}</S.Title>
             </S.ProductInfo>
             <S.PricePickWrapper>
@@ -80,14 +89,16 @@ export default function ProductDetail() {
             </S.PricePickWrapper>
             <S.Line1></S.Line1>
             <S.ProductContent>
-              <S.Content>{data?.fetchUseditem.contents}</S.Content>
+              <S.Content
+                dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+              ></S.Content>
               <S.TagWrapper>
                 <S.Tag>{data?.fetchUseditem.tags}</S.Tag>
               </S.TagWrapper>
             </S.ProductContent>
             <S.Line2></S.Line2>
             <S.ButtonWrapper>
-              <S.BuyButton>BUY NOW</S.BuyButton>
+              <S.BuyButton onClick={onClickBuy}>BUY NOW</S.BuyButton>
               <S.Basket>SHOPPING BAG</S.Basket>
             </S.ButtonWrapper>
           </S.ProductWrapper>
@@ -147,34 +158,38 @@ export default function ProductDetail() {
         <S.Detail>Q & A</S.Detail>
         <S.Line3></S.Line3>
         <S.Footer>
-          <S.QuestionWrapper>
+          <CommentWrite useditemId={data?.fetchUseditem?._id} />
+          <CommentDetail useditemId={data?.fetchUseditem?._id} />
+          {/* <S.QuestionWrapper>
             <S.QuestionInput placeholder="내용을 입력해 주세요." />
           </S.QuestionWrapper>
           <S.WriteButtonWrapper>
             <S.WriteButton>작성하기</S.WriteButton>
-          </S.WriteButtonWrapper>
+          </S.WriteButtonWrapper> */}
           {/* 본인이 본인 댓글 볼 때  댓글뷰 */}
-          <S.Line4></S.Line4>
-          <S.ReplyWrapper>
-            <S.NameWrapper>
-              <S.Name>노은정</S.Name>
-            </S.NameWrapper>
-            <S.ReplyContainer>
-              <S.Reply>
-                <S.ReplyTitleWrapper>
-                  <S.ReplyTitle>주현님 소개팅 착장 질문이요</S.ReplyTitle>
-                </S.ReplyTitleWrapper>
-                <S.ItemWrapper>
-                  <S.Date>2203.03.30</S.Date>
-                  <S.ModifyWrapper>
-                    <S.Modify src="/pencil.png" />
-                  </S.ModifyWrapper>
-                  <S.DeleteWrapper>
-                    <S.Delete src="/delete.png" />
-                  </S.DeleteWrapper>
-                </S.ItemWrapper>
-              </S.Reply>
-              <S.AnswerWrapper>
+          {/* <S.Line4></S.Line4> */}
+          {/* <S.ReplyWrapper> */}
+          {/* <S.ReplyContainer> */}
+          {/* <S.Reply1>
+                <S.NameWrapper>
+                  <S.Name>노은정</S.Name>
+                </S.NameWrapper>
+                <S.Reply>
+                  <S.ReplyTitleWrapper>
+                    <S.ReplyTitle>주현님 소개팅 착장 질문이요</S.ReplyTitle>
+                  </S.ReplyTitleWrapper>
+                  <S.ItemWrapper>
+                    <S.Date>2203.03.30</S.Date>
+                    <S.ModifyWrapper>
+                      <S.Modify src="/pencil.png" />
+                    </S.ModifyWrapper>
+                    <S.DeleteWrapper>
+                      <S.Delete src="/delete.png" />
+                    </S.DeleteWrapper>
+                  </S.ItemWrapper>
+                </S.Reply>
+              </S.Reply1> */}
+          {/* <S.AnswerWrapper>
                 <S.Answer>답변</S.Answer>
                 <S.Date1>2023.03.31</S.Date1>
                 <S.AnswerContents>
@@ -186,11 +201,11 @@ export default function ProductDetail() {
                   <div>궁금하신 사항은 언제든지 문의 부탁드립니다.</div>
                   <div>감사합니다.</div>
                 </S.AnswerContents>
-              </S.AnswerWrapper>
-            </S.ReplyContainer>
-          </S.ReplyWrapper>
+              </S.AnswerWrapper> */}
+          {/* </S.ReplyContainer> */}
+          {/* </S.ReplyWrapper> */}
           {/* 남들이 본인 볼 때 댓글뷰 */}
-          <S.ReplyWrapper>
+          {/* <S.ReplyWrapper>
             <S.NameWrapper>
               <S.Name>노은정</S.Name>
             </S.NameWrapper>
@@ -201,12 +216,18 @@ export default function ProductDetail() {
                 </S.ReplyTitleWrapper>
                 <S.ItemWrapper>
                   <S.Date>2203.03.30</S.Date>
-                  <S.AnswerImgWrapper>
+                  <S.ModifyWrapper>
+                    <S.Modify src="/pencil.png" />
+                  </S.ModifyWrapper>
+                  <S.DeleteWrapper>
+                    <S.Delete src="/delete.png" />
+                  </S.DeleteWrapper> */}
+          {/* <S.AnswerImgWrapper>
                     <S.AnswerImg src="answer.png" />
-                  </S.AnswerImgWrapper>
-                </S.ItemWrapper>
-              </S.Reply>
-              <S.AnswerWrapper>
+                  </S.AnswerImgWrapper> */}
+          {/* </S.ItemWrapper>
+              </S.Reply> */}
+          {/* <S.AnswerWrapper>
                 <S.Answer>답변</S.Answer>
                 <S.Date1>2023.03.31</S.Date1>
                 <S.AnswerContents>
@@ -218,11 +239,11 @@ export default function ProductDetail() {
                   <div>궁금하신 사항은 언제든지 문의 부탁드립니다.</div>
                   <div>감사합니다.</div>
                 </S.AnswerContents>
-              </S.AnswerWrapper>
-            </S.ReplyContainer>
-          </S.ReplyWrapper>
+              </S.AnswerWrapper> */}
+          {/* </S.ReplyContainer>
+          </S.ReplyWrapper> */}
           {/* 댓글에 답글을 남길 때 */}
-          <S.ReplyWrapper>
+          {/* <S.ReplyWrapper>
             <S.NameWrapper>
               <S.Name>노은정</S.Name>
             </S.NameWrapper>
@@ -248,7 +269,7 @@ export default function ProductDetail() {
                 </S.WriteButtonWrapper1>
               </S.AnswerWrapper>
             </S.ReplyContainer>
-          </S.ReplyWrapper>
+          </S.ReplyWrapper> */}
         </S.Footer>
       </S.Container>
     </>

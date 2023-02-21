@@ -60,6 +60,7 @@ export default function LayoutBest() {
                     ) : (
                       <S.ItemImg src="/noImg.jpeg" />
                     )}
+                    <S.PickImg src="/grayheart.png" />
                   </S.ItemImgWrapper>
                   <S.ContentsWrapper>
                     <S.PriceSaleWrapper>

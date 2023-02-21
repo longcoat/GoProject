@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const Container = styled.div`
   max-width: 1920px;
   width: 100%;
-  height: 1750px;
+  height: auto;
   padding: 104px 90px 104px 90px;
   margin: 0 auto;
 `;
@@ -238,6 +238,7 @@ export const CancelButton = styled.button`
   justify-content: center;
 
   color: #000000;
+  cursor: pointer;
 `;
 
 export const SubmitButton = styled.button`
@@ -264,4 +265,5 @@ export const SubmitButton = styled.button`
 
   color: #ffffff;
   border: 0;
+  cursor: pointer;
 `;
