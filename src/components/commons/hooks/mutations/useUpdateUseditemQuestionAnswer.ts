@@ -3,6 +3,8 @@ import {
   IMutation,
   IMutationUpdateUseditemQuestionAnswerArgs,
 } from "../../../../commons/types/generated/types";
+import { FETCH_USED_ITEM_QUESTION_ANSWERS } from "../queries/useFetchUseditemQuestionAnswers";
+import { FETCH_USED_ITEM_QUESTIONS } from "../queries/useFetchUseditemQuestions";
 
 export const UPDATE_USED_ITEM_QUESTION_ANSWER = gql`
   mutation updateUseditemQuestionAnswer(
@@ -29,8 +31,6 @@ export const useUpdateUseditemQuestionAnswer = () => {
     useditemQuestionAnswerId: any
   ) => {
     try {
-      console.log(useditemQuestionAnswerId);
-      console.log(data);
       await updateUseditemQuestionAnswer({
         variables: {
           useditemQuestionAnswerId: String(useditemQuestionAnswerId),

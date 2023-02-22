@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const Reply1 = styled.div`
   border-top: 1px solid #c0c0c0;
   border-bottom: 1px solid #c0c0c0;
-  padding: 20px 0px;
+  padding-top: 20px;
 `;
 
 export const NameWrapper = styled.div`

@@ -117,6 +117,7 @@ export default function CommentDetail(props: ICommentDetailProps) {
                               QuestionId={el._id}
                               onClickRecomment={onClickRecomment}
                               setRecommentOpen={setRecommentOpen}
+                              setOpenWrite={setOpenWrite}
                             />
                           )}
                         </S.TopWrapper>

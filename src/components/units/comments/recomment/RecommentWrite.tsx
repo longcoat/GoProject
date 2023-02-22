@@ -23,12 +23,14 @@ export default function RecommentWrite(props: any) {
     if (props.isEditRecomment === true) {
       void updateUseditemQuestionAnswerSubmit(data, props.QuestionAnswerId);
       props.setIsEditRecomment((prev) => !prev);
+      props.setOpenWrite(false);
       Modal.success({
         content: "답글이 수정되었습니다",
       });
     } else {
       void createUseditemQuestionAnswerSubmit(data, props.QuestionId);
       // props.setRecommentOpen(props.QuestionId);
+      props.setOpenWrite(false);
       Modal.success({
         content: "답글이 등록되었습니다",
       });

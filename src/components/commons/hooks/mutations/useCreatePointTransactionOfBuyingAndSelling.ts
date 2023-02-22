@@ -39,7 +39,7 @@ export const useCreatePointTransactionOfBuyingAndSelling = () => {
       });
       if (result?.data === null || result?.data === undefined) return;
       Modal.success({ content: "상품 구입이 완료되었습니다" });
-      void router.push("/brand");
+      void router.push("/");
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
