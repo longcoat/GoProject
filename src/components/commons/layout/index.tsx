@@ -32,9 +32,9 @@ export default function Layout(props: ILayoutProps) {
   const isHiddenCarousel = HIDDEN_CAROUSEL.includes(router.asPath);
 
   const { data } = useFetchUserLoggedIn();
-  const [userInfo, setInfoUser] = useRecoilState(userInfoState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   useEffect(() => {
-    setInfoUser({ ...data?.fetchUserLoggedIn });
+    setUserInfo({ ...data?.fetchUserLoggedIn });
   }, [data]);
 
   return (

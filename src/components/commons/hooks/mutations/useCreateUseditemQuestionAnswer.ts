@@ -26,7 +26,7 @@ export const useCreateUseditemQuestionAnswer = () => {
 
   const createUseditemQuestionAnswerSubmit = async (
     data: any,
-    useditemQuestionId: string
+    useditemQuestionId: any
   ) => {
     try {
       await createUseditemQuestionAnswer({

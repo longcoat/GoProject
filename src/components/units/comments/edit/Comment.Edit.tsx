@@ -8,7 +8,7 @@ export default function CommentEdit(props: any) {
   const { updateUseditemQuestionSubmit } = useUpdateUseditemQuestion();
   const onUpdateComment = (data: ICommentProps) => {
     void updateUseditemQuestionSubmit(data, props?.useditemQuestionId);
-    props.setIsUpdateId();
+    props.setIsUpdateId("");
     setValue("contents", "");
   };
   return (
@@ -28,7 +28,7 @@ export default function CommentEdit(props: any) {
           >
             취소하기
           </S.CancelButton>
-          <S.WriteButton>작성하기</S.WriteButton>
+          <S.WriteButton>수정하기</S.WriteButton>
         </S.WriteButtonWrapper>
       </form>
     </>

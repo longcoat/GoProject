@@ -1,4 +1,5 @@
 import { gql, useMutation } from "@apollo/client";
+import { Modal } from "antd";
 import {
   IMutation,
   IMutationToggleUseditemPickArgs,
@@ -32,6 +33,12 @@ export const useToggleUseditemPick = () => {
           },
         ],
       });
+      console.log(result, "toggleResult-----");
+      if (!!result.data?.toggleUseditemPick) {
+        Modal.success({ content: "찜하기 성공하셨습니다." });
+      } else {
+        Modal.error({ content: "찜하기 취소하셨습니다." });
+      }
       const likeList = useditemId;
       const likeLists = JSON.parse(localStorage.getItem("likeLists") ?? "[]");
       if (!likeLists.includes(likeList)) {

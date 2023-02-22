@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 
 export const Reply1 = styled.div`
-  display: flex;
-  flex-direction: row;
   border-top: 1px solid #c0c0c0;
   border-bottom: 1px solid #c0c0c0;
   padding: 20px 0px;
@@ -15,6 +13,10 @@ export const NameWrapper = styled.div`
   flex-direction: row;
   align-items: center;
 `;
+
+export const TopWrapper = styled.div``;
+
+export const BottomWrapper = styled.div``;
 
 export const Name = styled.div`
   width: 80px;
@@ -34,9 +36,9 @@ export const Reply = styled.div`
 
   width: 100%;
   margin-right: 20px;
+  margin-bottom: 20px;
 `;
 export const ReplyTitleWrapper = styled.div`
-  margin-left: 20px;
   width: 70%;
 `;
 
@@ -55,6 +57,7 @@ export const ModifyWrapper = styled.button`
   margin-left: 20px;
   background: none;
   border: none;
+  cursor: pointer;
 `;
 
 export const Modify = styled.img`
@@ -66,6 +69,7 @@ export const DeleteWrapper = styled.button`
   margin-left: 10px;
   background: none;
   border: none;
+  cursor: pointer;
 `;
 
 export const Delete = styled.img`
@@ -74,7 +78,9 @@ export const Delete = styled.img`
 `;
 
 export const AnswerImgWrapper = styled.div`
-  margin-left: 10px;
+  margin-left: 58px;
+  margin-right: 5px;
+  cursor: pointer;
 `;
 
 export const AnswerImg = styled.img`

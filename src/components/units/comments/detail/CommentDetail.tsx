@@ -6,6 +6,7 @@ import { useDeleteUseditemQuestion } from "../../../commons/hooks/mutations/useD
 import { useFetchUseditemQuestions } from "../../../commons/hooks/queries/useFetchUseditemQuestions";
 import CommentEdit from "../edit/Comment.Edit";
 import RecommentWrite from "../recomment/RecommentWrite";
+import ReCommentDetail from "../recommentdetail/RecommentDetail";
 import { ICommentDetailProps } from "./Comment.Detail.types";
 import * as S from "./CommentDetail.styles";
 
@@ -39,14 +40,13 @@ export default function CommentDetail(props: ICommentDetailProps) {
     });
   };
 
-  const onClickUpdateComment = (updateId: string) => (event: any) => {
+  const onClickUpdateComment = (updateId: string) => () => {
     setIsUpdateId(updateId);
   };
 
   const onClickRecomment = (data: any) => () => {
     console.log(data);
     setRecommentOpen(data);
-    console.log(recommentOpen);
   };
 
   console.log(data?.fetchUseditemQuestions[0], "-----datael");
@@ -68,47 +68,68 @@ export default function CommentDetail(props: ICommentDetailProps) {
                   <S.Reply1 key={el._id}>
                     {isUpdateId !== el._id ? (
                       <>
-                        <S.NameWrapper>
-                          <S.Name>{el.user.name}</S.Name>
-                        </S.NameWrapper>
-                        <S.Reply>
-                          <S.ReplyTitleWrapper>
-                            <S.ReplyTitle>{el.contents}</S.ReplyTitle>
-                          </S.ReplyTitleWrapper>
-                          <S.ItemWrapper>
-                            <S.Date>{el.createdAt.slice(0, 10)}</S.Date>
-                            {userInfo._id ===
-                              data?.fetchUseditemQuestions[index].user._id && (
-                              <>
-                                <S.ModifyWrapper
-                                  type="button"
-                                  onClick={onClickUpdateComment(el._id)}
-                                >
-                                  <S.Modify src="/pencil.png" />
-                                </S.ModifyWrapper>
-                                <S.DeleteWrapper
-                                  type="button"
-                                  onClick={onClickDeleteItemQuestion(el._id)}
-                                >
-                                  <S.Delete src="/delete.png" />
-                                </S.DeleteWrapper>
-                              </>
-                            )}
-                            {userInfo._id !==
-                              data?.fetchUseditemQuestions[index].user._id && (
-                              <>
-                                <S.AnswerImgWrapper>
-                                  <S.AnswerImg src="answer.png" />
-                                </S.AnswerImgWrapper>
-                              </>
-                            )}
-                          </S.ItemWrapper>
+                        <S.TopWrapper>
+                          <S.Reply>
+                            <S.NameWrapper>
+                              <S.Name>{el.user.name}</S.Name>
+                            </S.NameWrapper>
+                            <S.ReplyTitleWrapper>
+                              <S.ReplyTitle>{el.contents}</S.ReplyTitle>
+                            </S.ReplyTitleWrapper>
+                            <S.ItemWrapper>
+                              <S.Date>{el.createdAt.slice(0, 10)}</S.Date>
+                              {userInfo._id ===
+                                data?.fetchUseditemQuestions[index].user
+                                  ._id && (
+                                <>
+                                  <S.ModifyWrapper
+                                    type="button"
+                                    onClick={onClickUpdateComment(el._id)}
+                                  >
+                                    <S.Modify src="/pencil.png" />
+                                  </S.ModifyWrapper>
+                                  <S.DeleteWrapper
+                                    type="button"
+                                    onClick={onClickDeleteItemQuestion(el._id)}
+                                  >
+                                    <S.Delete src="/delete.png" />
+                                  </S.DeleteWrapper>
+                                </>
+                              )}
+                              {userInfo._id !==
+                                data?.fetchUseditemQuestions[index].user
+                                  ._id && (
+                                <>
+                                  <S.AnswerImgWrapper>
+                                    <S.AnswerImg src="answer.png" />
+                                  </S.AnswerImgWrapper>
+                                </>
+                              )}
+                            </S.ItemWrapper>
+                          </S.Reply>
                           <RecommentWrite
                             QuestionId={el._id}
                             onClickRecomment={onClickRecomment}
                             setRecommentOpen={setRecommentOpen}
                           />
-                        </S.Reply>
+                        </S.TopWrapper>
+                        <S.BottomWrapper>
+                          <ReCommentDetail QuestionId={el._id} />
+                          {recommentOpen ===
+                          data?.fetchUseditemQuestions[index]._id ? (
+                            <>
+                              <div>
+                                <RecommentWrite
+                                  QuestionId={el._id}
+                                  onClickRecomment={onClickRecomment}
+                                  setRecommentOpen={setRecommentOpen}
+                                />
+                              </div>
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                        </S.BottomWrapper>
                       </>
                     ) : (
                       <>

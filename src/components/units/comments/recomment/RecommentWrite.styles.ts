@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
 
 export const AnswerWrapper = styled.div`
-  margin-left: 20px;
   border-top: 1px dashed #c0c0c0;
   width: 100%;
+  padding-left: 146px;
+  padding-top: 11px;
 `;
 
 export const AnswerContents = styled.div`
@@ -18,6 +19,7 @@ export const WriteButtonWrapper1 = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 export const QuestionInput1 = styled.input`

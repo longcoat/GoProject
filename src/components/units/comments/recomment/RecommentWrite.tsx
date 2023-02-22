@@ -12,7 +12,7 @@ export default function RecommentWrite(props: any) {
     useCreateUseditemQuestionAnswer();
   const { updateUseditemQuestionAnswerSubmit } =
     useUpdateUseditemQuestionAnswer();
-  const [userInfo] = useRecoilState(userInfoState);
+  // const [userInfo] = useRecoilState(userInfoState);
   const { register, handleSubmit, reset } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -30,15 +30,11 @@ export default function RecommentWrite(props: any) {
       });
     } else {
       void createUseditemQuestionAnswerSubmit(data, props.QuestionId);
-      props.setRecommentOpen((prev) => !prev);
+      // props.setRecommentOpen(props.QuestionId);
       Modal.success({
         content: "답글이 등록되었습니다",
       });
     }
-  };
-
-  const onClickCancelEdit = () => {
-    props.setIsEditRecomment((prev) => !prev);
   };
 
   useEffect(() => {
@@ -49,6 +45,18 @@ export default function RecommentWrite(props: any) {
       reset({ ...resetData });
     }
   }, [props.defaultValue]);
+
+  const onClickCheckFunction = () => {
+    if (props.isEditRecomment) {
+      onClickCancelEdit();
+    } else {
+      props.onClickRecomment(props.QuestionId);
+    }
+  };
+
+  const onClickCancelEdit = () => {
+    props.setIsEditRecomment((prev) => !prev);
+  };
 
   return (
     <>
@@ -62,14 +70,7 @@ export default function RecommentWrite(props: any) {
             />
           </S.AnswerContents>
           <S.WriteButtonWrapper1>
-            <S.WriteButton1
-              type="button"
-              onClick={
-                props.isEditRecomment
-                  ? onClickCancelEdit
-                  : props.onClickRecomment("")
-              }
-            >
+            <S.WriteButton1 type="button" onClick={onClickCheckFunction}>
               취소하기
             </S.WriteButton1>
             <S.WriteButton2>

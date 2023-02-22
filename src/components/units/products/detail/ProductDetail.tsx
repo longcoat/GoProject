@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { userInfoState } from "../../../../commons/stores";
-import { useAuth } from "../../../commons/hooks/auth/useAuth";
 import { useCreatePointTransactionOfBuyingAndSelling } from "../../../commons/hooks/mutations/useCreatePointTransactionOfBuyingAndSelling";
 import { useFetchUseditem } from "../../../commons/hooks/queries/useFetchUseditem";
 import Link from "next/link";
@@ -17,7 +16,6 @@ import { useEffect, useState } from "react";
 import { Modal } from "antd";
 
 export default function ProductDetail() {
-  useAuth();
   const router = useRouter();
   const { data } = useFetchUseditem();
   const userId = useFetchUserLoggedIn();
@@ -108,11 +106,11 @@ export default function ProductDetail() {
                         height: "18px",
                         marginLeft: "7px",
                         color: "red",
+                        cursor: "pointer",
                       }}
                     />
                   </>
                 ) : (
-                  // && Modal.success({ content: "찜하기 성공!" })
                   <>
                     <S.HeartImg
                       onClick={onClickTogglePick}

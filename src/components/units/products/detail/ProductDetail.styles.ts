@@ -100,6 +100,7 @@ export const HeartImg = styled.img`
   width: 18px;
   height: 18px;
   margin-left: 7px;
+  cursor: pointer;
 `;
 
 export const Product = styled.div`

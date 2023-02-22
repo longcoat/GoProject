@@ -1,10 +1,8 @@
 import { gql, useMutation } from "@apollo/client";
 import {
   IMutation,
-  IMutationCreateUseditemQuestionArgs,
   IMutationUpdateUseditemQuestionArgs,
 } from "../../../../commons/types/generated/types";
-import { FETCH_USED_ITEM_QUESTIONS } from "../queries/useFetchUseditemQuestions";
 
 export const UPDATE_USER_ITEM_QUESTION = gql`
   mutation updateUseditemQuestion(
@@ -37,7 +35,7 @@ export const useUpdateUseditemQuestion = () => {
     try {
       await updateUseditemQuestion({
         variables: {
-          useditemQuestionId,
+          useditemQuestionId: String(useditemQuestionId),
           updateUseditemQuestionInput: {
             ...data,
           },
