@@ -16,6 +16,7 @@ export default function CommentDetail(props: ICommentDetailProps) {
   const { onClickDeleteItemQuestion } = useDeleteUseditemQuestion();
   const [isUpdateId, setIsUpdateId] = useState("");
   const [recommentOpen, setRecommentOpen] = useState("");
+  const [openWrite, setOpenWrite] = useState(false);
 
   const onLoadMore = () => {
     if (data === undefined) return;
@@ -71,13 +72,13 @@ export default function CommentDetail(props: ICommentDetailProps) {
                         <S.TopWrapper>
                           <S.Reply>
                             <S.NameWrapper>
-                              <S.Name>{el.user.name}</S.Name>
+                              <S.Name>{el?.user?.name}</S.Name>
                             </S.NameWrapper>
                             <S.ReplyTitleWrapper>
                               <S.ReplyTitle>{el.contents}</S.ReplyTitle>
                             </S.ReplyTitleWrapper>
                             <S.ItemWrapper>
-                              <S.Date>{el.createdAt.slice(0, 10)}</S.Date>
+                              <S.Date>{el?.createdAt?.slice(0, 10)}</S.Date>
                               {userInfo._id ===
                                 data?.fetchUseditemQuestions[index].user
                                   ._id && (
@@ -100,18 +101,24 @@ export default function CommentDetail(props: ICommentDetailProps) {
                                 data?.fetchUseditemQuestions[index].user
                                   ._id && (
                                 <>
-                                  <S.AnswerImgWrapper>
+                                  <S.AnswerImgWrapper
+                                    onClick={() => {
+                                      setOpenWrite((prev) => !prev);
+                                    }}
+                                  >
                                     <S.AnswerImg src="answer.png" />
                                   </S.AnswerImgWrapper>
                                 </>
                               )}
                             </S.ItemWrapper>
                           </S.Reply>
-                          <RecommentWrite
-                            QuestionId={el._id}
-                            onClickRecomment={onClickRecomment}
-                            setRecommentOpen={setRecommentOpen}
-                          />
+                          {openWrite && (
+                            <RecommentWrite
+                              QuestionId={el._id}
+                              onClickRecomment={onClickRecomment}
+                              setRecommentOpen={setRecommentOpen}
+                            />
+                          )}
                         </S.TopWrapper>
                         <S.BottomWrapper>
                           <ReCommentDetail QuestionId={el._id} />
@@ -120,7 +127,10 @@ export default function CommentDetail(props: ICommentDetailProps) {
                             <>
                               <div>
                                 <RecommentWrite
-                                  QuestionId={el._id}
+                                  QuestionAnswerId={
+                                    data?.fetchUseditemQuestions[index]._id
+                                  }
+                                  QustionId={el._id}
                                   onClickRecomment={onClickRecomment}
                                   setRecommentOpen={setRecommentOpen}
                                 />

@@ -81,6 +81,7 @@ export default function ReCommentDetail(props: any) {
                       QuestionAnswerId={
                         data?.fetchUseditemQuestionAnswers[index]._id
                       }
+                      // clickedAnswerId={clickedAnswerId}
                     />
                   </>
                 ) : (

@@ -29,9 +29,11 @@ export const useUpdateUseditemQuestionAnswer = () => {
     useditemQuestionAnswerId: any
   ) => {
     try {
+      console.log(useditemQuestionAnswerId);
+      console.log(data);
       await updateUseditemQuestionAnswer({
         variables: {
-          useditemQuestionAnswerId,
+          useditemQuestionAnswerId: String(useditemQuestionAnswerId),
           updateUseditemQuestionAnswerInput: {
             ...data,
           },
