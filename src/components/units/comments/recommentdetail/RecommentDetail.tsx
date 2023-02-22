@@ -76,6 +76,7 @@ export default function ReCommentDetail(props: any) {
                       defaultValue={
                         data?.fetchUseditemQuestionAnswers[index].contents
                       }
+                      isEditRecomment={isEditRecomment}
                       setIsEditRecomment={setIsEditRecomment}
                       setClickedAnswerId={setClickedAnswerId}
                       QuestionAnswerId={

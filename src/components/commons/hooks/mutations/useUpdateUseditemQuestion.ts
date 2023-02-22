@@ -40,17 +40,17 @@ export const useUpdateUseditemQuestion = () => {
             ...data,
           },
         },
-        update(cache, { data }) {
-          cache.modify({
-            fields: {
-              fetchUseditemQuestions: (prev: IRef[]) => {
-                const newSet = new Set([data.updateUseditemQuestion, ...prev]);
-                const updateData = Array.from(newSet);
-                return [updateData];
-              },
-            },
-          });
-        },
+        // update(cache, { data }) {
+        //   cache.modify({
+        //     fields: {
+        //       fetchUseditemQuestions: (prev: IRef[]) => {
+        //         const newSet = new Set([data.updateUseditemQuestion, ...prev]);
+        //         const updateData = Array.from(newSet);
+        //         return [updateData];
+        //       },
+        //     },
+        //   });
+        // },
       });
     } catch (error) {
       if (error instanceof Error) alert(error.message);
