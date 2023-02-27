@@ -10,12 +10,15 @@ import CommentWrite from "../../comments/write/Comment";
 import CommentDetail from "../../comments/detail/CommentDetail";
 import { useToggleUseditemPick } from "../../../commons/hooks/mutations/useToggleUseditemPick";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function ProductDetail() {
+  const router = useRouter();
   const { data } = useFetchUseditem();
   const userId = useFetchUserLoggedIn();
   console.log(userId, "userId-----");
-  console.log(data, "datadetail-------");
+  console.log(router.query.Id, "router-------");
+  console.log(data, "detaildata--------------------");
   const { onClickTogglePick } = useToggleUseditemPick();
   const { onClickDeleteItem } = useDeleteUseditem();
   const sanitizeHtml = require("sanitize-html");

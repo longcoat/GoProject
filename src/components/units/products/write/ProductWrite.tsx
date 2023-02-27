@@ -23,7 +23,6 @@ export default function ProductWrite(props: IProductWriteProps) {
   const router = useRouter();
   const [files, setFiles] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [address, setAddress] = useState("");
   const { createSubmit } = useCreateUsedItem();
   const { updateSubmit } = useUpdateUsedItem();
   const { uploadFile } = useUploadFile();
@@ -162,7 +161,6 @@ export default function ProductWrite(props: IProductWriteProps) {
     console.log(data, "address------");
     onToggleModal();
     setValue("useditemAddress.address", data.address);
-    setValue("useditemAddress.addressDetail", "");
     setValue("useditemAddress.zipcode", data.zonecode);
   };
 

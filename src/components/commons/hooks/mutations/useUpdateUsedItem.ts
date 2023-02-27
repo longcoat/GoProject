@@ -22,6 +22,11 @@ const CREATE_USED_ITEM = gql`
       price
       tags
       images
+      useditemAddress {
+        zipcode
+        address
+        addressDetail
+      }
     }
   }
 `;
@@ -45,6 +50,11 @@ export const useUpdateUsedItem = () => {
             price: parseInt(data.price),
             tags: data.tags,
             images: resultUrls,
+            useditemAddress: {
+              zipcode: data.useditemAddress.zipcode,
+              address: data.useditemAddress.address,
+              addressDetail: data.useditemAddress.addressDetail,
+            },
           },
         },
         refetchQueries: [

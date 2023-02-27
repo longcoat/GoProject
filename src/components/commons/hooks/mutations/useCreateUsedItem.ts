@@ -4,7 +4,9 @@ import {
   IMutation,
   IMutationCreateUseditemArgs,
 } from "../../../../commons/types/generated/types";
+import { FETCH_USED_ITEM } from "../queries/useFetchUseditem";
 import { FETCH_USED_ITEMS } from "../queries/useFetchUseditems";
+// import { FETCH_USED_ITEMS } from "../queries/useFetchUseditems";
 
 const CREATE_USED_ITEM = gql`
   mutation createUseditem($createUseditemInput: CreateUseditemInput!) {
@@ -16,6 +18,11 @@ const CREATE_USED_ITEM = gql`
       price
       tags
       images
+      useditemAddress {
+        address
+        addressDetail
+        zipcode
+      }
     }
   }
 `;
@@ -28,7 +35,7 @@ export const useCreateUsedItem = () => {
   >(CREATE_USED_ITEM);
 
   const createSubmit = async (data: any, resultUrls: string[]) => {
-    // console.log(data);
+    console.log(data, "dkddfjasdkjfadslkfjsadlfjlsadjfsadjf");
     try {
       const result = await createUseditem({
         variables: {
@@ -39,6 +46,11 @@ export const useCreateUsedItem = () => {
             price: parseInt(data.price),
             tags: data.tags,
             images: resultUrls,
+            useditemAddress: {
+              zipcode: data.useditemAddress.zipcode,
+              address: data.useditemAddress.address,
+              addressDetail: data.useditemAddress.addressDetail,
+            },
           },
         },
         refetchQueries: [
