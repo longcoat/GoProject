@@ -12,7 +12,7 @@ export interface IUseItemFormData {
   price: number;
   useditemAddress?: {
     zipcode: string;
-    address: string;
+    address: any;
     addressDetail: string;
     lat: number;
     lng: number;

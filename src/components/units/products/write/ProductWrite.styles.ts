@@ -145,6 +145,13 @@ export const AddressInput = styled.input`
   border: 0;
   margin-top: 25px;
   width: 791px;
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 100%;
+  color: #a9a9a9;
+  padding-left: 20px;
 `;
 
 export const ImgWrapper = styled.div`

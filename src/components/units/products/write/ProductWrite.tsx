@@ -4,8 +4,6 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useAuth } from "../../../commons/hooks/auth/useAuth";
 import { useForm } from "react-hook-form";
-import { useRecoilState } from "recoil";
-import { isEditState } from "../../../../commons/stores";
 import { IProductWriteProps, IUseItemFormData } from "./ProductWrite.types";
 import { Modal } from "antd";
 import { useCreateUsedItem } from "../../../commons/hooks/mutations/useCreateUsedItem";
@@ -13,21 +11,24 @@ import { useEffect, useState } from "react";
 import { useUpdateUsedItem } from "../../../commons/hooks/mutations/useUpdateUsedItem";
 import Uploads01 from "../../../commons/uploads/01/Upload01.index";
 import { useUploadFile } from "../../../commons/hooks/mutations/useUploadFile";
-import { result } from "lodash";
+import DaumPostcodeEmbed, { Address } from "react-daum-postcode";
 const ReactQuill = dynamic(async () => await import("react-quill"), {
   ssr: false,
 });
 
 export default function ProductWrite(props: IProductWriteProps) {
   console.log(props, "props-----");
+
   useAuth();
   const router = useRouter();
   const [files, setFiles] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [address, setAddress] = useState("");
   const { createSubmit } = useCreateUsedItem();
   const { updateSubmit } = useUpdateUsedItem();
   const { uploadFile } = useUploadFile();
 
-  const { register, setValue, trigger, reset, handleSubmit } = useForm({
+  const { register, setValue, reset, handleSubmit } = useForm({
     // resolver: yupResolver(ProductItemSchema),
     mode: "onChange",
     defaultValues: {
@@ -37,6 +38,11 @@ export default function ProductWrite(props: IProductWriteProps) {
       price: 0,
       tags: [],
       images: ["", ""],
+      useditemAddress: {
+        zipcode: "",
+        address: "",
+        addressDetail: "",
+      },
     },
   });
 
@@ -49,6 +55,12 @@ export default function ProductWrite(props: IProductWriteProps) {
         price: props.data?.fetchUseditem?.price,
         tags: [...props.data?.fetchUseditem.tags],
         images: [...props.data?.fetchUseditem.images],
+        useditemAddress: {
+          zipcode: props.data?.fetchUseditem?.useditemAddress?.zipcode,
+          address: props.data?.fetchUseditem?.useditemAddress?.address,
+          addressDetail:
+            props.data?.fetchUseditem?.useditemAddress?.addressDetail,
+        },
       };
       reset({ ...resetData });
     }
@@ -123,7 +135,6 @@ export default function ProductWrite(props: IProductWriteProps) {
     void router.push("/");
   };
 
-
   const onClickSubmit = async (data: IUseItemFormData) => {
     const results = await Promise.all(
       files.map(async (file) => await uploadFile({ variables: { file } }))
@@ -140,6 +151,19 @@ export default function ProductWrite(props: IProductWriteProps) {
       void updateSubmit(props.useditemId, data, resultUrls);
       Modal.success({ content: "상품수정이 완료되었습니다." });
     }
+  };
+
+  // Daum-postcode
+
+  const onToggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+  const handleComplete = (data: Address) => {
+    console.log(data, "address------");
+    onToggleModal();
+    setValue("useditemAddress.address", data.address);
+    setValue("useditemAddress.addressDetail", "");
+    setValue("useditemAddress.zipcode", data.zonecode);
   };
 
   return (
@@ -202,13 +226,33 @@ export default function ProductWrite(props: IProductWriteProps) {
                 </S.Map>
                 <S.Location>
                   <S.ZipcodeWrapper>
-                    <S.ZipNumber placeholder="07250" />
-                    <S.ZipSearch type="button">우편번호 검색</S.ZipSearch>
+                    <S.ZipNumber
+                      placeholder="07250"
+                      {...register("useditemAddress.zipcode")}
+                      readOnly
+                    />
+                    <S.ZipSearch type="button" onClick={onToggleModal}>
+                      우편번호 검색
+                    </S.ZipSearch>
+                    {isOpen && (
+                      <Modal
+                        open={true}
+                        onOk={onToggleModal}
+                        onCancel={onToggleModal}
+                      >
+                        <DaumPostcodeEmbed onComplete={handleComplete} />
+                      </Modal>
+                    )}
                   </S.ZipcodeWrapper>
-                  {/* <S.AddressWrapper> */}
-                  <S.AddressInput type="text" readOnly />
-                  <S.AddressInput type="text" readOnly />
-                  {/* </S.AddressWrapper> */}
+                  <S.AddressInput
+                    placeholder=""
+                    {...register("useditemAddress.address")}
+                    readOnly
+                  />
+                  <S.AddressInput
+                    placeholder=""
+                    {...register("useditemAddress.addressDetail")}
+                  />
                 </S.Location>
               </S.LocationWrapper>
             </S.MapWrapper>

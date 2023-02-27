@@ -1,25 +1,21 @@
-import { useRouter } from "next/router";
-import { userInfoState } from "../../../../commons/stores";
 import { useCreatePointTransactionOfBuyingAndSelling } from "../../../commons/hooks/mutations/useCreatePointTransactionOfBuyingAndSelling";
 import { useFetchUseditem } from "../../../commons/hooks/queries/useFetchUseditem";
 import Link from "next/link";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import * as S from "./ProductDetail.styles";
-import { useRecoilState } from "recoil";
 import { useDeleteUseditem } from "../../../commons/hooks/mutations/useDeleteUseditem";
 import { useFetchUserLoggedIn } from "../../../commons/hooks/queries/useFetchUserLoggedIn";
 import CommentWrite from "../../comments/write/Comment";
 import CommentDetail from "../../comments/detail/CommentDetail";
 import { useToggleUseditemPick } from "../../../commons/hooks/mutations/useToggleUseditemPick";
 import { useEffect, useState } from "react";
-import { Modal } from "antd";
 
 export default function ProductDetail() {
-  const router = useRouter();
   const { data } = useFetchUseditem();
   const userId = useFetchUserLoggedIn();
   console.log(userId, "userId-----");
+  console.log(data, "datadetail-------");
   const { onClickTogglePick } = useToggleUseditemPick();
   const { onClickDeleteItem } = useDeleteUseditem();
   const sanitizeHtml = require("sanitize-html");
