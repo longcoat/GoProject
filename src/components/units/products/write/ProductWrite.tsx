@@ -12,10 +12,13 @@ import { useUpdateUsedItem } from "../../../commons/hooks/mutations/useUpdateUse
 import Uploads01 from "../../../commons/uploads/01/Upload01.index";
 import { useUploadFile } from "../../../commons/hooks/mutations/useUploadFile";
 import DaumPostcodeEmbed, { Address } from "react-daum-postcode";
+import { makeMap } from "../../../commons/map/map";
 const ReactQuill = dynamic(async () => await import("react-quill"), {
   ssr: false,
 });
-
+declare const window: typeof globalThis & {
+  kakao: any;
+};
 export default function ProductWrite(props: IProductWriteProps) {
   console.log(props, "props-----");
 
@@ -47,6 +50,17 @@ export default function ProductWrite(props: IProductWriteProps) {
 
   useEffect(() => {
     if (props.data) {
+      const script = document.createElement("script");
+      script.src =
+        "//dapi.kakao.com/v2/maps/sdk.js?&libraries=services&autoload=false&appkey=0457afe40a10e00f115e2739ad089eb8";
+      document.head.appendChild(script);
+
+      script.onload = () => {
+        window.kakao.maps.load(function () {
+          makeMap(props.data?.fetchUseditem?.useditemAddress?.address);
+        });
+      };
+
       const resetData = {
         name: props.data?.fetchUseditem?.name,
         remarks: props.data?.fetchUseditem?.remarks,
@@ -162,6 +176,7 @@ export default function ProductWrite(props: IProductWriteProps) {
     onToggleModal();
     setValue("useditemAddress.address", data.address);
     setValue("useditemAddress.zipcode", data.zonecode);
+    makeMap(data?.address);
   };
 
   return (
@@ -220,7 +235,7 @@ export default function ProductWrite(props: IProductWriteProps) {
               <S.Label>브랜드 위치</S.Label>
               <S.LocationWrapper>
                 <S.Map>
-                  <S.MapImg src="/map.png" />
+                  <S.MapImg id="map" />
                 </S.Map>
                 <S.Location>
                   <S.ZipcodeWrapper>

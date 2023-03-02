@@ -91,7 +91,13 @@ export const LocationWrapper = styled.div`
 
 export const Map = styled.div``;
 
-export const MapImg = styled.img``;
+export const MapImg = styled.div`
+  /* width: 500px;
+  height: 255px; */
+  width: 300px;
+  height: 300px;
+  background-color: red;
+`;
 
 export const Location = styled.div`
   margin: 20px 0px 0px 26px;
