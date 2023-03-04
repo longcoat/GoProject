@@ -89,14 +89,14 @@ export const LocationWrapper = styled.div`
   padding: 34px 0px 0px 30px;
 `;
 
-export const Map = styled.div``;
+// export const Map = styled.div``;
 
-export const MapImg = styled.div`
+export const Map = styled.div`
   /* width: 500px;
   height: 255px; */
   width: 300px;
   height: 300px;
-  background-color: red;
+  // background-color: red;
 `;
 
 export const Location = styled.div`

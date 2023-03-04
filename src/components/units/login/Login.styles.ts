@@ -43,7 +43,8 @@ export const IdWrapper = styled.div`
   display: flex;
   flex-direction: row;
 
-  padding-bottom: 24px;
+  /* padding-bottom: 24px; */
+  background-color: red;
 `;
 
 export const Id = styled.div`
@@ -79,6 +80,10 @@ export const IdInput = styled.input`
   padding-left: 20px;
 `;
 
+export const Error = styled.div`
+  color: #000000;
+`;
+
 export const PasswordWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -109,8 +114,8 @@ export const PassInput = styled.input`
   line-height: 100%;
   /* or 15px */
 
-  display: flex;
-  align-items: center;
+  /* display: flex;
+  align-items: center; */
 
   color: #a9a9a9;
   border: 0;

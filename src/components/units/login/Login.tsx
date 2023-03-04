@@ -2,12 +2,14 @@ import { useForm } from "react-hook-form";
 import { LoginUser } from "../../commons/hooks/mutations/useLoginUser";
 import * as S from "./Login.styles";
 import { IFormLogin, IFormLoginData } from "./Login.types";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoginSchema } from "../../../commons/libraries/validationYup";
 
 export default function Login() {
   const { UserLogin } = LoginUser();
-  const { register, handleSubmit } = useForm<IFormLogin>({
-    // resolver: yupResolver(ProductSchema),
+  const { register, formState, handleSubmit } = useForm<IFormLogin>({
     mode: "onChange",
+    resolver: yupResolver(LoginSchema),
   });
   const onClickLogin = async (data: IFormLoginData) => {
     void UserLogin(data);
@@ -28,6 +30,8 @@ export default function Login() {
                   {...register("email")}
                 />
               </S.IdWrapper>
+              <S.Error>{formState.errors.email?.message}</S.Error>
+
               <S.PasswordWrapper>
                 <S.Password>비밀번호</S.Password>
                 <S.PassInput
@@ -36,6 +40,7 @@ export default function Login() {
                   {...register("password")}
                 />
               </S.PasswordWrapper>
+              <S.Error>{formState.errors.password?.message}</S.Error>
             </S.InfoWrapper>
             <S.LoginWrapper>
               <S.LoginButton>로그인</S.LoginButton>

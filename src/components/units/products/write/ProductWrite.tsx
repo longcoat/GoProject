@@ -52,7 +52,7 @@ export default function ProductWrite(props: IProductWriteProps) {
     if (props.data) {
       const script = document.createElement("script");
       script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?&libraries=services&autoload=false&appkey=0457afe40a10e00f115e2739ad089eb8";
+        "//dapi.kakao.com/v2/maps/sdk.js?&libraries=services&autoload=false&appkey=59ed8dad5d71145e99338d9b82780395";
       document.head.appendChild(script);
 
       script.onload = () => {
@@ -234,9 +234,9 @@ export default function ProductWrite(props: IProductWriteProps) {
             <S.MapWrapper>
               <S.Label>브랜드 위치</S.Label>
               <S.LocationWrapper>
-                <S.Map>
-                  <S.MapImg id="map" />
-                </S.Map>
+                <div>
+                  <S.Map id="map" />
+                </div>
                 <S.Location>
                   <S.ZipcodeWrapper>
                     <S.ZipNumber
