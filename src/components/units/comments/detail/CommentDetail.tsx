@@ -50,7 +50,7 @@ export default function CommentDetail(props: ICommentDetailProps) {
     setRecommentOpen(data);
   };
 
-  console.log(data?.fetchUseditemQuestions[0], "-----datael");
+  console.log(data?.fetchUseditemQuestions[0], "-----commentdetail");
 
   console.log(userInfo, "----userInfo");
   return (

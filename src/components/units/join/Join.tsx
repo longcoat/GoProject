@@ -46,10 +46,11 @@ export default function Join() {
                 <S.PassCheck>비밀번호 확인</S.PassCheck>
                 <S.PassCheckInput
                   type="password"
-                  placeholder="영문+숫자 조합 8~16자리를 입력해주세요."
+                  placeholder="비밀번호를 한번 더 입력해주세요."
                   {...register("passwordCheck")}
                 />
               </S.PassCheckWrapper>
+              <S.Error>{formState.errors.passwordCheck?.message}</S.Error>
               <S.NameWrapper>
                 <S.Name>이름</S.Name>
                 <S.NameInput

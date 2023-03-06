@@ -11,6 +11,7 @@ import CommentDetail from "../../comments/detail/CommentDetail";
 import { useToggleUseditemPick } from "../../../commons/hooks/mutations/useToggleUseditemPick";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { makeMap } from "../../../commons/map/map";
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -44,6 +45,12 @@ export default function ProductDetail() {
     data?.fetchUseditem.seller?._id
   );
   useEffect(() => {
+    console.log(data?.fetchUseditem?.useditemAddress?.address);
+    const address = data?.fetchUseditem?.useditemAddress?.address;
+    if (!!address) {
+      makeMap(data?.fetchUseditem?.useditemAddress?.address);
+    }
+
     const likeItems = JSON.parse(localStorage.getItem("likeLists") ?? "[]");
     setLikeLists(likeItems);
   }, [data?.fetchUseditem?.pickedCount]);
@@ -147,7 +154,7 @@ export default function ProductDetail() {
             안내사항보다 우선 적용됩니다.
           </S.Caution1>
           <S.MapWrapper>
-            <S.Map src="/map1.png" />
+            <S.Map id="map" />
           </S.MapWrapper>
           <S.ContentWrapper>
             <S.List>

@@ -37,8 +37,8 @@ export default function ProductWrite(props: IProductWriteProps) {
       name: "",
       remarks: "",
       contents: "",
-      price: 0,
-      tags: [],
+      price: "",
+      tags: [""],
       images: ["", ""],
       useditemAddress: {
         zipcode: "",
@@ -49,18 +49,19 @@ export default function ProductWrite(props: IProductWriteProps) {
   });
 
   useEffect(() => {
+    console.log(props.data, "props.data------write");
+    const script = document.createElement("script");
+    script.src =
+      "//dapi.kakao.com/v2/maps/sdk.js?&libraries=services&autoload=false&appkey=59ed8dad5d71145e99338d9b82780395";
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      window.kakao.maps.load(function () {
+        makeMap(props.data?.fetchUseditem?.useditemAddress?.address);
+      });
+    };
+
     if (props.data) {
-      const script = document.createElement("script");
-      script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?&libraries=services&autoload=false&appkey=59ed8dad5d71145e99338d9b82780395";
-      document.head.appendChild(script);
-
-      script.onload = () => {
-        window.kakao.maps.load(function () {
-          makeMap(props.data?.fetchUseditem?.useditemAddress?.address);
-        });
-      };
-
       const resetData = {
         name: props.data?.fetchUseditem?.name,
         remarks: props.data?.fetchUseditem?.remarks,

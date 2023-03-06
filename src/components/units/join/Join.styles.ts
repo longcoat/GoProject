@@ -79,7 +79,7 @@ export const PasswordWrapper = styled.div`
 export const PassCheckWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  padding-bottom: 45px;
+  /* padding-bottom: 45px; */
 `;
 
 export const NameWrapper = styled.div`

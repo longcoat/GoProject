@@ -92,10 +92,9 @@ export const LocationWrapper = styled.div`
 // export const Map = styled.div``;
 
 export const Map = styled.div`
-  /* width: 500px;
-  height: 255px; */
-  width: 300px;
-  height: 300px;
+  width: 500px;
+  height: 255px;
+
   // background-color: red;
 `;
 

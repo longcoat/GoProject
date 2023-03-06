@@ -16,6 +16,10 @@ export const JoinSchema = yup.object({
       "비밀번호는 영문, 숫자 조합 8~16자리를 입력해주세요."
     )
     .required("비밀번호를 입력해주세요."),
+  passwordCheck: yup
+    .string()
+    .oneOf([yup.ref("password")], "패스워드가 일치하지 않습니다.")
+    .required("비밀번호를 한번 더 입력해주세요"),
 });
 
 export const LoginSchema = yup.object({
