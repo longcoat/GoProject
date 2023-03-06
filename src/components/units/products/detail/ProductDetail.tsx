@@ -12,6 +12,11 @@ import { useToggleUseditemPick } from "../../../commons/hooks/mutations/useToggl
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { makeMap } from "../../../commons/map/map";
+import { Modal } from "antd";
+
+declare const window: typeof globalThis & {
+  kakao: any;
+};
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -44,13 +49,30 @@ export default function ProductDetail() {
     userId.data?.fetchUserLoggedIn._id,
     data?.fetchUseditem.seller?._id
   );
-  useEffect(() => {
-    console.log(data?.fetchUseditem?.useditemAddress?.address);
-    const address = data?.fetchUseditem?.useditemAddress?.address;
-    if (!!address) {
-      makeMap(data?.fetchUseditem?.useditemAddress?.address);
-    }
+  console.log(
+    data?.fetchUseditem?.useditemAddress?.address,
+    "---useEffecttesttest"
+  );
+  const address = data?.fetchUseditem?.useditemAddress?.address;
+  if (!address) {
+    console.log("a");
 
+    const script = document.createElement("script");
+    script.src =
+      "//dapi.kakao.com/v2/maps/sdk.js?&libraries=services&autoload=false&appkey=59ed8dad5d71145e99338d9b82780395";
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      window.kakao.maps.load(function () {
+        makeMap(data?.fetchUseditem?.useditemAddress?.address);
+      });
+    };
+  } else {
+    console.log("b");
+    makeMap(data?.fetchUseditem?.useditemAddress?.address);
+  }
+
+  useEffect(() => {
     const likeItems = JSON.parse(localStorage.getItem("likeLists") ?? "[]");
     setLikeLists(likeItems);
   }, [data?.fetchUseditem?.pickedCount]);

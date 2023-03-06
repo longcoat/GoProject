@@ -3,7 +3,7 @@ declare const window: typeof globalThis & {
 };
 
 export const makeMap = (address) => {
-  console.log(address);
+  console.log(address, "--------addresssssMAP");
 
   const container = document.getElementById("map");
   const options = {

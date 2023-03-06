@@ -306,7 +306,7 @@ export const MapWrapper = styled.div`
   margin-bottom: 15px;
 `;
 
-export const Map = styled.img`
+export const Map = styled.div`
   width: 100%;
   height: 500px;
 `;
