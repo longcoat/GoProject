@@ -2,10 +2,13 @@ import { useForm } from "react-hook-form";
 import { useCreateUser } from "../../commons/hooks/mutations/useCreateUser";
 import * as S from "./Join.styles";
 import { IFormSignUpData } from "./Join.types";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { JoinSchema } from "../../../commons/libraries/validationYup";
 
 export default function Join() {
-  const { register, handleSubmit } = useForm<IFormSignUpData>({
-    // resolver: yupResolver(loginSchema),
+  const { register, formState, handleSubmit } = useForm<IFormSignUpData>({
+    mode: "onChange",
+    resolver: yupResolver(JoinSchema),
   });
   const { CreateUserSubmit } = useCreateUser();
   const onSubmitForm = (data: IFormSignUpData) => {
@@ -29,6 +32,7 @@ export default function Join() {
                   {...register("email")}
                 />
               </S.IdWrapper>
+              <S.Error>{formState.errors.email?.message}</S.Error>
               <S.PasswordWrapper>
                 <S.Password>비밀번호</S.Password>
                 <S.PassInput
@@ -37,6 +41,7 @@ export default function Join() {
                   {...register("password")}
                 />
               </S.PasswordWrapper>
+              <S.Error>{formState.errors.password?.message}</S.Error>
               <S.PassCheckWrapper>
                 <S.PassCheck>비밀번호 확인</S.PassCheck>
                 <S.PassCheckInput

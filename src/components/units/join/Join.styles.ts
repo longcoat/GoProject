@@ -34,7 +34,7 @@ export const InfoWrapper = styled.div`
 export const IdWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  padding-bottom: 24px;
+  /* padding-bottom: 24px; */
 `;
 
 export const Id = styled.div`
@@ -53,7 +53,7 @@ export const Id = styled.div`
 
 export const IdInput = styled.input`
   width: 611px;
-  height: 56px;
+  height: 45px;
   background: #e9e9e9;
   font-family: "Noto Sans";
   font-style: normal;
@@ -73,13 +73,13 @@ export const IdInput = styled.input`
 export const PasswordWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  padding-bottom: 24px;
+  /* padding-bottom: 24px; */
 `;
 
 export const PassCheckWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  padding-bottom: 24px;
+  padding-bottom: 45px;
 `;
 
 export const NameWrapper = styled.div`
@@ -103,7 +103,7 @@ export const Name = styled.div`
 
 export const NameInput = styled.input`
   width: 611px;
-  height: 56px;
+  height: 45px;
   background: #e9e9e9;
   font-family: "Noto Sans";
   font-style: normal;
@@ -136,7 +136,7 @@ export const PassCheck = styled.div`
 
 export const PassCheckInput = styled.input`
   width: 611px;
-  height: 56px;
+  height: 45px;
   background: #e9e9e9;
   font-family: "Noto Sans";
   font-style: normal;
@@ -169,7 +169,7 @@ export const Password = styled.div`
 
 export const PassInput = styled.input`
   width: 611px;
-  height: 56px;
+  height: 45px;
   background: #e9e9e9;
   font-family: "Noto Sans";
   font-style: normal;
@@ -188,7 +188,7 @@ export const PassInput = styled.input`
 
 export const JoinLine2 = styled.div`
   border: 1px solid #555555;
-  margin: 40px 90px 0px 90px;
+  margin: 58px 90px 0px 90px;
 `;
 
 export const JoinFooter = styled.div``;
@@ -252,4 +252,12 @@ export const ConfirmButton = styled.button`
 
   color: #ffffff;
   cursor: pointer;
+`;
+
+export const Error = styled.div`
+  display: flex;
+  align-items: center;
+  color: red;
+  height: 45px;
+  padding-left: 190px;
 `;

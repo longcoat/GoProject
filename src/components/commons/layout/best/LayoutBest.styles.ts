@@ -54,6 +54,7 @@ export const ItemImgWrapper = styled.div`
   width: 300px;
   height: 370px;
   position: relative;
+  object-fit: cover;
 `;
 
 export const ItemImg = styled.img`

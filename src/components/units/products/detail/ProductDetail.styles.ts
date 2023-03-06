@@ -34,6 +34,7 @@ export const Img = styled.img`
 
 export const ProductWrapper = styled.div`
   margin-left: 50px;
+  width: 100%;
 `;
 
 export const ProductInfo = styled.div`
