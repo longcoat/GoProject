@@ -9,3 +9,8 @@ export const userInfoState = atom({
   key: "userInfoState",
   default: {},
 });
+
+export const globalSearch = atom({
+  key: "globalSearch",
+  default: "",
+});

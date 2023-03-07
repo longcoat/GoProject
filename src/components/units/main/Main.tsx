@@ -7,7 +7,7 @@ import {
 import * as S from "./Main.styles";
 import InfiniteScroll from "react-infinite-scroller";
 import { useRecoilState } from "recoil";
-import { accessTokenState } from "../../../commons/stores/index";
+import { accessTokenState, globalSearch } from "../../../commons/stores/index";
 
 export const FETCH_USED_ITEMS = gql`
   query ($page: Int) {
@@ -25,6 +25,8 @@ export const FETCH_USED_ITEMS = gql`
 export default function Main() {
   const router = useRouter();
   const [accessToken] = useRecoilState(accessTokenState);
+  const [search] = useRecoilState(globalSearch);
+  console.log(search, "MainSearch--------------------------");
   console.log(accessToken);
 
   console.log(accessToken, "token------");
@@ -130,7 +132,7 @@ export default function Main() {
                         <S.Sale>90%</S.Sale>
                         <S.Price>
                           {el.price
-                            .toString()
+                            ?.toString()
                             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                         </S.Price>
                       </S.PriceSaleWrapper>

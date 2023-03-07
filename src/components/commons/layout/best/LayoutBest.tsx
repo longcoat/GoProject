@@ -1,37 +1,18 @@
-import { gql, useQuery } from "@apollo/client";
-import { Router, useRouter } from "next/router";
-import {
-  type IQuery,
-  type IQueryFetchUseditemsArgs,
-} from "../../../../commons/types/generated/types";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { globalSearch } from "../../../../commons/stores";
+
 import { useFetchUseditems } from "../../hooks/queries/useFetchUseditems";
 import * as S from "./LayoutBest.styles";
-// export const FETCH_USED_ITEMS = gql`
-//   query ($page: Int) {
-//     fetchUseditems(page: $page) {
-//       _id
-//       name
-//       price
-//       images
-//       createdAt
-//       remarks
-//       pickedCount
-//     }
-//   }
-// `;
 
 export default function LayoutBest() {
   const router = useRouter();
   console.log(router, "bestbestbest-router-------------");
-  const { data, fetchMore } = useFetchUseditems();
+  const { data } = useFetchUseditems();
+  // const [search, setSearch] = useState("");
+  const [search, setSearch] = useRecoilState(globalSearch);
   console.log(data);
-
-  // const { data } = useQuery<
-  //   Pick<IQuery, "fetchUseditems">,
-  //   IQueryFetchUseditemsArgs
-  // >(FETCH_USED_ITEMS);
-
-  // console.log(data?.fetchUseditems);
 
   const onClickImage = (e) => {
     console.log("=====");
@@ -48,9 +29,16 @@ export default function LayoutBest() {
   const bestList = [...pickList].sort(
     (item, item2) => item2.pickedCount - item.pickedCount
   );
-
   console.log(data?.fetchUseditems, "afjsdlfjdskalfjkadjflajf");
   console.log(bestList, "hohohohoohohohohohoohohoho");
+
+  const onChangeSearch = (e: any) => {
+    if (e.target.value === "") return;
+    const input = e.target.value.toLowerCase();
+    console.log(e.target.value, "eeeeeeeeeeeeeee");
+    setSearch(input);
+  };
+
   return (
     <>
       <S.Best>
@@ -59,7 +47,7 @@ export default function LayoutBest() {
             <S.Title>BEST</S.Title>
             <S.ItemContainer>
               {/* 아이템하나 */}
-              {bestList.slice(0, 4).map((el) => (
+              {bestList?.slice(0, 4).map((el) => (
                 <S.ItemWrapper onClick={onClickImage} id={el._id} key={el._id}>
                   <S.ItemImgWrapper>
                     {el.images[0] !== "" ? (
@@ -98,7 +86,7 @@ export default function LayoutBest() {
             <S.SubmitButton onClick={onClickSubmit}>상품 등록</S.SubmitButton>
           </S.ButtonWrapper>
           <S.Search>
-            <S.SearchInput />
+            <S.SearchInput onChange={onChangeSearch} />
             <S.GlassWrapper>
               <S.GlassImg src="/readingglasses.png" />
             </S.GlassWrapper>
