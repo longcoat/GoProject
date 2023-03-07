@@ -4,31 +4,34 @@ import {
   type IQuery,
   type IQueryFetchUseditemsArgs,
 } from "../../../../commons/types/generated/types";
+import { useFetchUseditems } from "../../hooks/queries/useFetchUseditems";
 import * as S from "./LayoutBest.styles";
-export const FETCH_USED_ITEMS = gql`
-  query ($page: Int) {
-    fetchUseditems(page: $page) {
-      _id
-      name
-      price
-      images
-      createdAt
-      remarks
-    }
-  }
-`;
+// export const FETCH_USED_ITEMS = gql`
+//   query ($page: Int) {
+//     fetchUseditems(page: $page) {
+//       _id
+//       name
+//       price
+//       images
+//       createdAt
+//       remarks
+//       pickedCount
+//     }
+//   }
+// `;
 
 export default function LayoutBest() {
   const router = useRouter();
+  console.log(router, "bestbestbest-router-------------");
+  const { data, fetchMore } = useFetchUseditems();
+  console.log(data);
 
-  console.log(router);
+  // const { data } = useQuery<
+  //   Pick<IQuery, "fetchUseditems">,
+  //   IQueryFetchUseditemsArgs
+  // >(FETCH_USED_ITEMS);
 
-  const { data } = useQuery<
-    Pick<IQuery, "fetchUseditems">,
-    IQueryFetchUseditemsArgs
-  >(FETCH_USED_ITEMS);
-
-  console.log(data?.fetchUseditems);
+  // console.log(data?.fetchUseditems);
 
   const onClickImage = (e) => {
     console.log("=====");
@@ -41,6 +44,13 @@ export default function LayoutBest() {
     void router.push("/new");
   };
 
+  const pickList = data?.fetchUseditems ?? [];
+  const bestList = [...pickList].sort(
+    (item, item2) => item2.pickedCount - item.pickedCount
+  );
+
+  console.log(data?.fetchUseditems, "afjsdlfjdskalfjkadjflajf");
+  console.log(bestList, "hohohohoohohohohohoohohoho");
   return (
     <>
       <S.Best>
@@ -49,7 +59,7 @@ export default function LayoutBest() {
             <S.Title>BEST</S.Title>
             <S.ItemContainer>
               {/* 아이템하나 */}
-              {data?.fetchUseditems.slice(0, 4).map((el) => (
+              {bestList.slice(0, 4).map((el) => (
                 <S.ItemWrapper onClick={onClickImage} id={el._id} key={el._id}>
                   <S.ItemImgWrapper>
                     {el.images[0] !== "" ? (

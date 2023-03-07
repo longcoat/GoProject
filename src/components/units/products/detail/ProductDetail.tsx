@@ -12,7 +12,6 @@ import { useToggleUseditemPick } from "../../../commons/hooks/mutations/useToggl
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { makeMap } from "../../../commons/map/map";
-import { Modal } from "antd";
 
 declare const window: typeof globalThis & {
   kakao: any;

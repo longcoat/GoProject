@@ -11,6 +11,7 @@ export default function Join() {
     resolver: yupResolver(JoinSchema),
   });
   const { CreateUserSubmit } = useCreateUser();
+
   const onSubmitForm = (data: IFormSignUpData) => {
     const { passwordCheck, ...value } = data;
     void CreateUserSubmit(value);

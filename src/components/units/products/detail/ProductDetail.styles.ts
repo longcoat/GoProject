@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { Modal } from "antd";
 
 export const Container = styled.div`
   max-width: 1920px;
