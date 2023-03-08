@@ -1,40 +1,19 @@
-import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import {
-  IQuery,
-  IQueryFetchUseditemsArgs,
-} from "../../../commons/types/generated/types";
 import * as S from "./Main.styles";
 import InfiniteScroll from "react-infinite-scroller";
 import { useRecoilState } from "recoil";
 import { accessTokenState, globalSearch } from "../../../commons/stores/index";
-
-export const FETCH_USED_ITEMS = gql`
-  query ($page: Int) {
-    fetchUseditems(page: $page) {
-      _id
-      name
-      price
-      images
-      createdAt
-      remarks
-    }
-  }
-`;
+import { useFetchUseditems } from "../../commons/hooks/queries/useFetchUseditems";
 
 export default function Main() {
   const router = useRouter();
   const [accessToken] = useRecoilState(accessTokenState);
   const [search] = useRecoilState(globalSearch);
+  const { data, fetchMore } = useFetchUseditems();
   console.log(search, "MainSearch--------------------------");
   console.log(accessToken);
 
   console.log(accessToken, "token------");
-
-  const { data, fetchMore } = useQuery<
-    Pick<IQuery, "fetchUseditems">,
-    IQueryFetchUseditemsArgs
-  >(FETCH_USED_ITEMS);
 
   const onLoadMore = () => {
     if (data === undefined) return;
